@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --rosa-claro: #fce4ec;
@@ -26,6 +27,9 @@
             --verde: #4caf50;
             --vermelho: #f44336;
             --amarelo: #ffc107;
+            --roxo: #9c27b0;
+            --laranja: #ff9800;
+            --ciano: #00bcd4;
         }
 
         * {
@@ -372,10 +376,6 @@
             background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
         }
 
-        .btn-secondary:hover {
-            background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
-        }
-
         .btn-success {
             background: linear-gradient(135deg, var(--verde), #2e7d32);
         }
@@ -386,6 +386,10 @@
 
         .btn-danger {
             background: linear-gradient(135deg, var(--vermelho), #c62828);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, var(--ciano), #00838f);
         }
 
         .btn-small {
@@ -708,6 +712,141 @@
             font-weight: bold;
         }
 
+        /* Seção de Relatórios - Melhorada */
+        .relatorios-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .relatorios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1100px) {
+            .relatorios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .grafico-card {
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px var(--sombra);
+            border: 1px solid var(--cinza-medio);
+        }
+
+        .grafico-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--cinza-medio);
+        }
+
+        .grafico-header h3 {
+            font-size: 1.4rem;
+            color: var(--rosa-escuro);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .grafico-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .legenda-grafico {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--cinza-medio);
+        }
+
+        .item-legenda {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .cor-legenda {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .tabela-relatorio {
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px var(--sombra);
+            border: 1px solid var(--cinza-medio);
+        }
+
+        .tabela-relatorio .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .filtros-relatorio {
+            background-color: var(--cinza-claro);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--cinza-medio);
+        }
+
+        .filtros-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        /* Indicadores */
+        .indicadores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .indicador {
+            background: linear-gradient(135deg, var(--rosa-claro), var(--azul-claro));
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid var(--cinza-medio);
+        }
+
+        .indicador-titulo {
+            font-size: 0.9rem;
+            color: var(--rosa-escuro);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .indicador-valor {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+        }
+
+        .indicador-desc {
+            font-size: 0.8rem;
+            color: var(--cinza-escuro);
+            margin-top: 0.5rem;
+        }
+
         /* Responsividade */
         @media (max-width: 1200px) {
             .nav-item {
@@ -754,6 +893,15 @@
             .actions {
                 flex-direction: column;
             }
+            
+            .grafico-card, .tabela-relatorio {
+                padding: 1rem;
+            }
+            
+            .relatorios-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -772,6 +920,10 @@
             .login-container {
                 padding: 1.5rem;
             }
+            
+            .indicadores-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Utilitários */
@@ -789,8 +941,10 @@
 
         .mt-1 { margin-top: 1rem; }
         .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
         .mb-1 { margin-bottom: 1rem; }
         .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
         .ml-1 { margin-left: 1rem; }
         .mr-1 { margin-right: 1rem; }
 
@@ -1379,118 +1533,251 @@
                     </div>
                 </section>
 
-                <!-- Relatórios -->
+                <!-- Relatórios - Versão Melhorada -->
                 <section id="relatorios-section" class="hidden">
                     <div class="section-title">
-                        <h2><i class="fas fa-chart-bar"></i> Relatórios</h2>
+                        <h2><i class="fas fa-chart-bar"></i> Relatórios Analíticos</h2>
                         <div>
-                            <button class="btn" id="btn-gerar-relatorio"><i class="fas fa-sync-alt"></i> Atualizar Dados</button>
+                            <button class="btn" id="btn-gerar-relatorio"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                            <button class="btn btn-info" id="btn-exportar-dash"><i class="fas fa-download"></i> Exportar</button>
                         </div>
                     </div>
 
-                    <div class="dashboard-cards mb-2">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Vendas do Mês</h3>
-                                <i class="fas fa-chart-line card-icon"></i>
+                    <!-- Filtros -->
+                    <div class="filtros-relatorio">
+                        <h3 class="mb-1"><i class="fas fa-filter"></i> Filtros do Relatório</h3>
+                        <div class="filtros-row">
+                            <div class="form-group">
+                                <label for="relatorio-periodo">Período</label>
+                                <select id="relatorio-periodo">
+                                    <option value="hoje">Hoje</option>
+                                    <option value="semana">Esta Semana</option>
+                                    <option value="mes" selected>Este Mês</option>
+                                    <option value="trimestre">Este Trimestre</option>
+                                    <option value="ano">Este Ano</option>
+                                    <option value="personalizado">Personalizado</option>
+                                </select>
                             </div>
-                            <div class="card-value" id="vendas-mes">R$ 0,00</div>
-                            <div class="card-footer">Total de vendas no mês atual</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Lucro do Mês</h3>
-                                <i class="fas fa-money-bill-wave card-icon"></i>
+                            <div class="form-group" id="relatorio-data-inicio-container" style="display: none;">
+                                <label for="relatorio-data-inicio">Data Início</label>
+                                <input type="date" id="relatorio-data-inicio">
                             </div>
-                            <div class="card-value" id="lucro-mes">R$ 0,00</div>
-                            <div class="card-footer">Lucro líquido no mês atual</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Produtos Mais Vendidos</h3>
-                                <i class="fas fa-star card-icon"></i>
+                            <div class="form-group" id="relatorio-data-fim-container" style="display: none;">
+                                <label for="relatorio-data-fim">Data Fim</label>
+                                <input type="date" id="relatorio-data-fim">
                             </div>
-                            <div class="card-value" id="produtos-vendidos">0</div>
-                            <div class="card-footer">Total de produtos vendidos no mês</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Ticket Médio</h3>
-                                <i class="fas fa-receipt card-icon"></i>
+                            <div class="form-group">
+                                <label for="relatorio-categoria">Categoria</label>
+                                <select id="relatorio-categoria">
+                                    <option value="">Todas</option>
+                                    <option value="Vestidos">Vestidos</option>
+                                    <option value="Blusas">Blusas</option>
+                                    <option value="Calças">Calças</option>
+                                    <option value="Saias">Saias</option>
+                                    <option value="Casacos">Casacos</option>
+                                    <option value="Roupas Íntimas">Roupas Íntimas</option>
+                                    <option value="Acessórios">Acessórios</option>
+                                </select>
                             </div>
-                            <div class="card-value" id="ticket-medio">R$ 0,00</div>
-                            <div class="card-footer">Valor médio por venda</div>
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button class="btn w-100" id="btn-aplicar-filtros"><i class="fas fa-check"></i> Aplicar Filtros</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-row">
+                    <!-- Indicadores Rápidos -->
+                    <div class="indicadores-grid mb-3">
+                        <div class="indicador">
+                            <div class="indicador-titulo">Vendas no Período</div>
+                            <div class="indicador-valor" id="vendas-periodo-indicador">R$ 0,00</div>
+                            <div class="indicador-desc">Total de vendas</div>
+                        </div>
+                        <div class="indicador">
+                            <div class="indicador-titulo">Lucro Líquido</div>
+                            <div class="indicador-valor" id="lucro-periodo-indicador">R$ 0,00</div>
+                            <div class="indicador-desc">Lucro após custos</div>
+                        </div>
+                        <div class="indicador">
+                            <div class="indicador-titulo">Ticket Médio</div>
+                            <div class="indicador-valor" id="ticket-medio-indicador">R$ 0,00</div>
+                            <div class="indicador-desc">Por venda</div>
+                        </div>
+                        <div class="indicador">
+                            <div class="indicador-titulo">Produtos Vendidos</div>
+                            <div class="indicador-valor" id="produtos-vendidos-indicador">0</div>
+                            <div class="indicador-desc">Unidades no período</div>
+                        </div>
+                        <div class="indicador">
+                            <div class="indicador-titulo">Novos Clientes</div>
+                            <div class="indicador-valor" id="novos-clientes-indicador">0</div>
+                            <div class="indicador-desc">Cadastros no período</div>
+                        </div>
+                        <div class="indicador">
+                            <div class="indicador-titulo">Conversão</div>
+                            <div class="indicador-valor" id="conversao-indicador">0%</div>
+                            <div class="indicador-desc">Taxa de conversão</div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos -->
+                    <div class="relatorios-grid">
+                        <!-- Gráfico de Vendas por Categoria -->
+                        <div class="grafico-card">
+                            <div class="grafico-header">
+                                <h3><i class="fas fa-chart-pie"></i> Vendas por Categoria</h3>
+                                <button class="btn btn-small" id="btn-detalhes-categoria">Detalhes</button>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="grafico-categoria"></canvas>
+                            </div>
+                            <div class="legenda-grafico" id="legenda-categoria">
+                                <!-- Legenda será gerada dinamicamente -->
+                            </div>
+                        </div>
+
+                        <!-- Gráfico de Evolução de Vendas -->
+                        <div class="grafico-card">
+                            <div class="grafico-header">
+                                <h3><i class="fas fa-chart-line"></i> Evolução de Vendas</h3>
+                                <button class="btn btn-small" id="btn-detalhes-evolucao">Detalhes</button>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="grafico-evolucao"></canvas>
+                            </div>
+                            <div class="legenda-grafico">
+                                <div class="item-legenda">
+                                    <div class="cor-legenda" style="background-color: var(--rosa-principal);"></div>
+                                    <span>Vendas</span>
+                                </div>
+                                <div class="item-legenda">
+                                    <div class="cor-legenda" style="background-color: var(--azul-principal);"></div>
+                                    <span>Lucro</span>
+                                </div>
+                                <div class="item-legenda">
+                                    <div class="cor-legenda" style="background-color: var(--verde);"></div>
+                                    <span>Meta</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gráfico de Métodos de Pagamento -->
+                        <div class="grafico-card">
+                            <div class="grafico-header">
+                                <h3><i class="fas fa-credit-card"></i> Métodos de Pagamento</h3>
+                                <button class="btn btn-small" id="btn-detalhes-pagamento">Detalhes</button>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="grafico-pagamento"></canvas>
+                            </div>
+                            <div class="legenda-grafico" id="legenda-pagamento">
+                                <!-- Legenda será gerada dinamicamente -->
+                            </div>
+                        </div>
+
+                        <!-- Gráfico de Produtos Mais Vendidos -->
+                        <div class="grafico-card">
+                            <div class="grafico-header">
+                                <h3><i class="fas fa-star"></i> Top 5 Produtos</h3>
+                                <button class="btn btn-small" id="btn-detalhes-top-produtos">Detalhes</button>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="grafico-top-produtos"></canvas>
+                            </div>
+                            <div class="legenda-grafico" id="legenda-top-produtos">
+                                <!-- Legenda será gerada dinamicamente -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="form-row mt-3">
                         <div class="form-group">
-                            <label for="relatorio-periodo">Período do Relatório</label>
-                            <select id="relatorio-periodo">
-                                <option value="hoje">Hoje</option>
-                                <option value="semana">Esta Semana</option>
-                                <option value="mes" selected>Este Mês</option>
-                                <option value="trimestre">Este Trimestre</option>
-                                <option value="ano">Este Ano</option>
-                                <option value="personalizado">Personalizado</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="relatorio-data-inicio-container" style="display: none;">
-                            <label for="relatorio-data-inicio">Data Início</label>
-                            <input type="date" id="relatorio-data-inicio">
-                        </div>
-                        <div class="form-group" id="relatorio-data-fim-container" style="display: none;">
-                            <label for="relatorio-data-fim">Data Fim</label>
-                            <input type="date" id="relatorio-data-fim">
-                        </div>
-                        <div class="form-group">
-                            <label>&nbsp;</label>
-                            <button class="btn" id="btn-gerar-relatorio-financeiro-pdf"><i class="fas fa-file-pdf"></i> Relatório Financeiro PDF</button>
-                            <button class="btn btn-secondary" id="btn-gerar-relatorio-estoque-pdf"><i class="fas fa-file-pdf"></i> Relatório Estoque PDF</button>
+                            <button class="btn" id="btn-gerar-relatorio-financeiro-pdf">
+                                <i class="fas fa-file-pdf"></i> Relatório Financeiro
+                            </button>
+                            <button class="btn btn-secondary" id="btn-gerar-relatorio-estoque-pdf">
+                                <i class="fas fa-boxes"></i> Relatório de Estoque
+                            </button>
+                            <button class="btn btn-info" id="btn-gerar-relatorio-cliente-pdf">
+                                <i class="fas fa-users"></i> Relatório de Clientes
+                            </button>
                         </div>
                     </div>
 
-                    <div class="section-title mt-2">
-                        <h3><i class="fas fa-chart-pie"></i> Vendas por Categoria</h3>
-                    </div>
-                    
-                    <div class="table-container">
-                        <table id="tabela-vendas-categoria">
-                            <thead>
-                                <tr>
-                                    <th>Categoria</th>
-                                    <th>Quantidade Vendida</th>
-                                    <th>Valor Total</th>
-                                    <th>% do Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Vendas por categoria serão inseridas aqui via JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- Tabelas Detalhadas -->
+                    <div class="tabelas-container mt-3">
+                        <!-- Tabela de Vendas por Categoria -->
+                        <div class="tabela-relatorio">
+                            <div class="section-title">
+                                <h3><i class="fas fa-table"></i> Detalhamento por Categoria</h3>
+                                <button class="btn btn-small" id="btn-exportar-categoria">Exportar</button>
+                            </div>
+                            <div class="table-container">
+                                <table id="tabela-vendas-categoria">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoria</th>
+                                            <th>Quantidade Vendida</th>
+                                            <th>Valor Total</th>
+                                            <th>Lucro</th>
+                                            <th>% do Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Vendas por categoria serão inseridas aqui via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-                    <div class="section-title mt-2">
-                        <h3><i class="fas fa-calendar-alt"></i> Vendas por Período</h3>
-                    </div>
-                    
-                    <div class="table-container">
-                        <table id="tabela-vendas-periodo">
-                            <thead>
-                                <tr>
-                                    <th>Período</th>
-                                    <th>Quantidade de Vendas</th>
-                                    <th>Valor Total</th>
-                                    <th>Lucro</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Vendas por período serão inseridas aqui via JavaScript -->
-                            </tbody>
-                        </table>
+                        <!-- Tabela de Vendas por Período -->
+                        <div class="tabela-relatorio">
+                            <div class="section-title">
+                                <h3><i class="fas fa-calendar-alt"></i> Vendas por Período</h3>
+                                <button class="btn btn-small" id="btn-exportar-periodo">Exportar</button>
+                            </div>
+                            <div class="table-container">
+                                <table id="tabela-vendas-periodo">
+                                    <thead>
+                                        <tr>
+                                            <th>Período</th>
+                                            <th>Quantidade de Vendas</th>
+                                            <th>Valor Total</th>
+                                            <th>Lucro</th>
+                                            <th>Variação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Vendas por período serão inseridas aqui via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Tabela de Clientes Mais Ativos -->
+                        <div class="tabela-relatorio">
+                            <div class="section-title">
+                                <h3><i class="fas fa-users"></i> Clientes Mais Ativos</h3>
+                                <button class="btn btn-small" id="btn-exportar-clientes">Exportar</button>
+                            </div>
+                            <div class="table-container">
+                                <table id="tabela-clientes-ativos">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Total Compras</th>
+                                            <th>Valor Gasto</th>
+                                            <th>Última Compra</th>
+                                            <th>Ticket Médio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Clientes ativos serão inseridos aqui via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -1814,10 +2101,38 @@
         let modoEdicaoProduto = false;
         let modoEdicaoUsuario = false;
         
+        // Gráficos
+        let graficoCategoria = null;
+        let graficoEvolucao = null;
+        let graficoPagamento = null;
+        let graficoTopProdutos = null;
+        
         // Controle de inatividade
         let inactivityTimer;
         let inactivityCounter = 60;
         let inactivityLimit = configuracoes.inatividade * 60; // Convertendo minutos para segundos
+
+        // Cores para gráficos
+        const coresGrafico = [
+            'rgba(244, 143, 177, 0.8)',  // Rosa principal
+            'rgba(100, 181, 246, 0.8)',  // Azul principal
+            'rgba(76, 175, 80, 0.8)',    // Verde
+            'rgba(255, 193, 7, 0.8)',    // Amarelo
+            'rgba(156, 39, 176, 0.8)',   // Roxo
+            'rgba(255, 152, 0, 0.8)',    // Laranja
+            'rgba(0, 188, 212, 0.8)'     // Ciano
+        ];
+
+        // Cores de borda para gráficos
+        const coresBordaGrafico = [
+            'rgb(244, 143, 177)',  // Rosa principal
+            'rgb(100, 181, 246)',  // Azul principal
+            'rgb(76, 175, 80)',    // Verde
+            'rgb(255, 193, 7)',    // Amarelo
+            'rgb(156, 39, 176)',   // Roxo
+            'rgb(255, 152, 0)',    // Laranja
+            'rgb(0, 188, 212)'     // Ciano
+        ];
 
         // Inicialização do sistema
         document.addEventListener('DOMContentLoaded', function() {
@@ -2034,7 +2349,10 @@
             document.getElementById('btn-imprimir-recibo').addEventListener('click', gerarReciboPDF);
             
             // Botões de relatório
-            document.getElementById('btn-gerar-relatorio').addEventListener('click', carregarRelatorios);
+            document.getElementById('btn-gerar-relatorio').addEventListener('click', function() {
+                carregarRelatorios();
+                mostrarMensagem('Relatórios atualizados com sucesso!', 'success');
+            });
             
             // Botões de usuário
             document.getElementById('btn-novo-usuario').addEventListener('click', mostrarFormUsuario);
@@ -2058,15 +2376,56 @@
                 if (periodo === 'personalizado') {
                     inicioContainer.style.display = 'block';
                     fimContainer.style.display = 'block';
+                    
+                    // Definir datas padrão para personalizado
+                    const hoje = new Date();
+                    const umaSemanaAtras = new Date();
+                    umaSemanaAtras.setDate(hoje.getDate() - 7);
+                    
+                    document.getElementById('relatorio-data-inicio').value = umaSemanaAtras.toISOString().split('T')[0];
+                    document.getElementById('relatorio-data-fim').value = hoje.toISOString().split('T')[0];
                 } else {
                     inicioContainer.style.display = 'none';
                     fimContainer.style.display = 'none';
                 }
             });
             
+            // Botão para aplicar filtros
+            document.getElementById('btn-aplicar-filtros').addEventListener('click', function() {
+                carregarRelatorios();
+                mostrarMensagem('Filtros aplicados com sucesso!', 'success');
+            });
+            
             // Botões de relatório PDF
             document.getElementById('btn-gerar-relatorio-financeiro-pdf').addEventListener('click', gerarRelatorioFinanceiroPDF);
             document.getElementById('btn-gerar-relatorio-estoque-pdf').addEventListener('click', gerarRelatorioEstoquePDF);
+            document.getElementById('btn-gerar-relatorio-cliente-pdf').addEventListener('click', gerarRelatorioClientePDF);
+            
+            // Botões de exportação
+            document.getElementById('btn-exportar-dash').addEventListener('click', exportarDashboard);
+            document.getElementById('btn-exportar-categoria').addEventListener('click', function() {
+                exportarTabelaParaCSV('tabela-vendas-categoria', 'vendas_por_categoria');
+            });
+            document.getElementById('btn-exportar-periodo').addEventListener('click', function() {
+                exportarTabelaParaCSV('tabela-vendas-periodo', 'vendas_por_periodo');
+            });
+            document.getElementById('btn-exportar-clientes').addEventListener('click', function() {
+                exportarTabelaParaCSV('tabela-clientes-ativos', 'clientes_ativos');
+            });
+            
+            // Botões de detalhes dos gráficos
+            document.getElementById('btn-detalhes-categoria').addEventListener('click', function() {
+                document.getElementById('tabela-vendas-categoria').scrollIntoView({ behavior: 'smooth' });
+            });
+            document.getElementById('btn-detalhes-evolucao').addEventListener('click', function() {
+                document.getElementById('tabela-vendas-periodo').scrollIntoView({ behavior: 'smooth' });
+            });
+            document.getElementById('btn-detalhes-pagamento').addEventListener('click', function() {
+                mostrarModalPagamento();
+            });
+            document.getElementById('btn-detalhes-top-produtos').addEventListener('click', function() {
+                mostrarModalTopProdutos();
+            });
         }
 
         // Configurar eventos de backup
@@ -2425,7 +2784,8 @@
                     telefone,
                     endereco,
                     dataNascimento,
-                    totalCompras: 0
+                    totalCompras: 0,
+                    dataCadastro: new Date().toISOString()
                 };
                 clientes.push(novoCliente);
                 mostrarMensagem('Cliente cadastrado com sucesso!', 'success');
@@ -3081,6 +3441,7 @@
                 const clienteIndex = clientes.findIndex(c => c.id === clienteId);
                 if (clienteIndex !== -1) {
                     clientes[clienteIndex].totalCompras = (clientes[clienteIndex].totalCompras || 0) + 1;
+                    clientes[clienteIndex].ultimaCompra = new Date().toISOString();
                 }
             }
             
@@ -3215,10 +3576,12 @@
             atualizarOpcoesProdutosAjuste();
         }
 
-        // Funções para Relatórios
+        // Funções para Relatórios - Versão Melhorada
         function carregarRelatorios() {
-            // Calcular período
+            // Obter filtros
             const periodo = document.getElementById('relatorio-periodo').value;
+            const categoriaFiltro = document.getElementById('relatorio-categoria').value;
+            
             let dataInicio, dataFim;
             
             const hoje = new Date();
@@ -3258,13 +3621,21 @@
             // Ajustar data fim para incluir o dia inteiro
             dataFim.setHours(23, 59, 59, 999);
             
-            // Filtrar vendas pelo período
+            // Filtrar vendas pelo período e categoria
             const vendasPeriodo = vendas.filter(v => {
                 const dataVenda = new Date(v.data);
-                return dataVenda >= dataInicio && dataVenda <= dataFim;
+                const dentroPeriodo = dataVenda >= dataInicio && dataVenda <= dataFim;
+                
+                if (!dentroPeriodo || !categoriaFiltro) return dentroPeriodo;
+                
+                // Filtrar por categoria se selecionada
+                return v.produtos.some(p => {
+                    const produto = produtos.find(prod => prod.id === p.produtoId);
+                    return produto && produto.categoria === categoriaFiltro;
+                });
             });
             
-            // Calcular totais
+            // Calcular totais para indicadores
             const totalVendas = vendasPeriodo.reduce((total, v) => total + v.total, 0);
             const totalProdutosVendidos = vendasPeriodo.reduce((total, v) => {
                 return total + v.produtos.reduce((sum, p) => sum + p.quantidade, 0);
@@ -3285,22 +3656,39 @@
             // Calcular ticket médio
             const ticketMedio = vendasPeriodo.length > 0 ? totalVendas / vendasPeriodo.length : 0;
             
-            // Atualizar cards
-            document.getElementById('vendas-mes').textContent = formatarMoeda(totalVendas);
-            document.getElementById('lucro-mes').textContent = formatarMoeda(lucroTotal);
-            document.getElementById('produtos-vendidos').textContent = totalProdutosVendidos;
-            document.getElementById('ticket-medio').textContent = formatarMoeda(ticketMedio);
+            // Calcular novos clientes no período
+            const novosClientes = clientes.filter(c => {
+                if (!c.dataCadastro) return false;
+                const dataCadastro = new Date(c.dataCadastro);
+                return dataCadastro >= dataInicio && dataCadastro <= dataFim;
+            }).length;
             
-            // Carregar vendas por categoria
+            // Calcular taxa de conversão (clientes que compraram / total clientes)
+            const clientesComCompras = new Set(vendasPeriodo.map(v => v.clienteId).filter(id => id !== null));
+            const conversao = clientes.length > 0 ? (clientesComCompras.size / clientes.length * 100).toFixed(1) : 0;
+            
+            // Atualizar indicadores
+            document.getElementById('vendas-periodo-indicador').textContent = formatarMoeda(totalVendas);
+            document.getElementById('lucro-periodo-indicador').textContent = formatarMoeda(lucroTotal);
+            document.getElementById('ticket-medio-indicador').textContent = formatarMoeda(ticketMedio);
+            document.getElementById('produtos-vendidos-indicador').textContent = totalProdutosVendidos;
+            document.getElementById('novos-clientes-indicador').textContent = novosClientes;
+            document.getElementById('conversao-indicador').textContent = conversao + '%';
+            
+            // Carregar gráficos
+            criarGraficoCategoria(vendasPeriodo);
+            criarGraficoEvolucao(dataInicio, dataFim);
+            criarGraficoPagamento(vendasPeriodo);
+            criarGraficoTopProdutos(vendasPeriodo);
+            
+            // Carregar tabelas detalhadas
             carregarVendasPorCategoria(vendasPeriodo);
-            
-            // Carregar vendas por período
             carregarVendasPorPeriodo(dataInicio, dataFim);
+            carregarClientesAtivos(vendasPeriodo);
         }
         
-        function carregarVendasPorCategoria(vendasPeriodo) {
-            const tbody = document.querySelector('#tabela-vendas-categoria tbody');
-            tbody.innerHTML = '';
+        function criarGraficoCategoria(vendasPeriodo) {
+            const ctx = document.getElementById('grafico-categoria').getContext('2d');
             
             // Agrupar vendas por categoria
             const vendasPorCategoria = {};
@@ -3314,44 +3702,75 @@
                         const valorCategoria = item.precoUnitario * item.quantidade;
                         
                         if (!vendasPorCategoria[categoria]) {
-                            vendasPorCategoria[categoria] = {
-                                quantidade: 0,
-                                valor: 0
-                            };
+                            vendasPorCategoria[categoria] = 0;
                         }
                         
-                        vendasPorCategoria[categoria].quantidade += item.quantidade;
-                        vendasPorCategoria[categoria].valor += valorCategoria;
+                        vendasPorCategoria[categoria] += valorCategoria;
                         totalGeral += valorCategoria;
                     }
                 });
             });
             
-            // Adicionar linhas na tabela
-            for (const categoria in vendasPorCategoria) {
-                const porcentagem = totalGeral > 0 ? (vendasPorCategoria[categoria].valor / totalGeral * 100).toFixed(1) : 0;
+            const categorias = Object.keys(vendasPorCategoria);
+            const valores = Object.values(vendasPorCategoria);
+            
+            // Criar legenda
+            const legendaContainer = document.getElementById('legenda-categoria');
+            legendaContainer.innerHTML = '';
+            
+            categorias.forEach((categoria, index) => {
+                const porcentagem = totalGeral > 0 ? ((vendasPorCategoria[categoria] / totalGeral) * 100).toFixed(1) : 0;
                 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${categoria}</td>
-                    <td>${vendasPorCategoria[categoria].quantidade}</td>
-                    <td>${formatarMoeda(vendasPorCategoria[categoria].valor)}</td>
-                    <td>${porcentagem}%</td>
+                const itemLegenda = document.createElement('div');
+                itemLegenda.className = 'item-legenda';
+                itemLegenda.innerHTML = `
+                    <div class="cor-legenda" style="background-color: ${coresGrafico[index % coresGrafico.length]};"></div>
+                    <span>${categoria}: ${formatarMoeda(vendasPorCategoria[categoria])} (${porcentagem}%)</span>
                 `;
-                tbody.appendChild(row);
+                legendaContainer.appendChild(itemLegenda);
+            });
+            
+            // Destruir gráfico anterior se existir
+            if (graficoCategoria) {
+                graficoCategoria.destroy();
             }
             
-            // Se não houver dados
-            if (Object.keys(vendasPorCategoria).length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="4" class="text-center">Nenhuma venda no período selecionado.</td>`;
-                tbody.appendChild(row);
-            }
+            // Criar novo gráfico
+            graficoCategoria = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categorias,
+                    datasets: [{
+                        data: valores,
+                        backgroundColor: coresGrafico.slice(0, categorias.length),
+                        borderColor: coresBordaGrafico.slice(0, categorias.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const percentage = Math.round((value / totalGeral) * 100);
+                                    return `${label}: ${formatarMoeda(value)} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
         
-        function carregarVendasPorPeriodo(dataInicio, dataFim) {
-            const tbody = document.querySelector('#tabela-vendas-periodo tbody');
-            tbody.innerHTML = '';
+        function criarGraficoEvolucao(dataInicio, dataFim) {
+            const ctx = document.getElementById('grafico-evolucao').getContext('2d');
             
             // Determinar o tipo de agrupamento com base no período
             const diffDias = Math.ceil((dataFim - dataInicio) / (1000 * 60 * 60 * 24));
@@ -3381,29 +3800,444 @@
                 }
                 
                 let chave;
+                let rotulo;
                 
                 switch(agrupamento) {
                     case 'hora':
                         chave = `${dataVenda.getDate().toString().padStart(2, '0')}/${(dataVenda.getMonth()+1).toString().padStart(2, '0')} ${dataVenda.getHours().toString().padStart(2, '0')}h`;
+                        rotulo = chave;
                         break;
                     case 'dia':
-                        chave = `${dataVenda.getDate().toString().padStart(2, '0')}/${(dataVenda.getMonth()+1).toString().padStart(2, '0')}`;
+                        chave = `${dataVenda.getFullYear()}-${(dataVenda.getMonth()+1).toString().padStart(2, '0')}-${dataVenda.getDate().toString().padStart(2, '0')}`;
+                        rotulo = `${dataVenda.getDate().toString().padStart(2, '0')}/${(dataVenda.getMonth()+1).toString().padStart(2, '0')}`;
                         break;
                     case 'semana':
                         const semana = Math.ceil(dataVenda.getDate() / 7);
-                        chave = `Semana ${semana} (${dataVenda.getMonth()+1})`;
+                        chave = `${dataVenda.getFullYear()}-W${semana}`;
+                        rotulo = `Semana ${semana}`;
                         break;
                     case 'mes':
-                        chave = dataVenda.toLocaleDateString('pt-BR', { month: 'long' });
+                        chave = `${dataVenda.getFullYear()}-${(dataVenda.getMonth()+1).toString().padStart(2, '0')}`;
+                        rotulo = dataVenda.toLocaleDateString('pt-BR', { month: 'short' });
                         break;
                 }
                 
                 if (!vendasAgrupadas[chave]) {
                     vendasAgrupadas[chave] = {
+                        rotulo: rotulo,
+                        valor: 0,
+                        lucro: 0
+                    };
+                }
+                
+                vendasAgrupadas[chave].valor += venda.total;
+                
+                // Calcular lucro da venda
+                let lucroVenda = 0;
+                venda.produtos.forEach(item => {
+                    const produto = produtos.find(p => p.id === item.produtoId);
+                    if (produto) {
+                        lucroVenda += (item.precoUnitario - produto.precoCusto) * item.quantidade;
+                    }
+                });
+                
+                vendasAgrupadas[chave].lucro += lucroVenda;
+            });
+            
+            // Ordenar por chave (que é temporal)
+            const chavesOrdenadas = Object.keys(vendasAgrupadas).sort();
+            const rotulos = chavesOrdenadas.map(chave => vendasAgrupadas[chave].rotulo);
+            const valores = chavesOrdenadas.map(chave => vendasAgrupadas[chave].valor);
+            const lucros = chavesOrdenadas.map(chave => vendasAgrupadas[chave].lucro);
+            
+            // Destruir gráfico anterior se existir
+            if (graficoEvolucao) {
+                graficoEvolucao.destroy();
+            }
+            
+            // Criar novo gráfico
+            graficoEvolucao = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: rotulos,
+                    datasets: [
+                        {
+                            label: 'Vendas',
+                            data: valores,
+                            borderColor: coresBordaGrafico[0], // Rosa
+                            backgroundColor: 'rgba(244, 143, 177, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Lucro',
+                            data: lucros,
+                            borderColor: coresBordaGrafico[2], // Verde
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatarMoeda(value);
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += formatarMoeda(context.parsed.y);
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function criarGraficoPagamento(vendasPeriodo) {
+            const ctx = document.getElementById('grafico-pagamento').getContext('2d');
+            
+            // Agrupar vendas por forma de pagamento
+            const vendasPorPagamento = {};
+            
+            vendasPeriodo.forEach(venda => {
+                const formaPagamento = venda.formaPagamento || 'Não informado';
+                
+                if (!vendasPorPagamento[formaPagamento]) {
+                    vendasPorPagamento[formaPagamento] = 0;
+                }
+                
+                vendasPorPagamento[formaPagamento] += venda.total;
+            });
+            
+            const formasPagamento = Object.keys(vendasPorPagamento);
+            const valores = Object.values(vendasPorPagamento);
+            
+            // Criar legenda
+            const legendaContainer = document.getElementById('legenda-pagamento');
+            legendaContainer.innerHTML = '';
+            
+            formasPagamento.forEach((forma, index) => {
+                const itemLegenda = document.createElement('div');
+                itemLegenda.className = 'item-legenda';
+                itemLegenda.innerHTML = `
+                    <div class="cor-legenda" style="background-color: ${coresGrafico[index % coresGrafico.length]};"></div>
+                    <span>${forma}: ${formatarMoeda(vendasPorPagamento[forma])}</span>
+                `;
+                legendaContainer.appendChild(itemLegenda);
+            });
+            
+            // Destruir gráfico anterior se existir
+            if (graficoPagamento) {
+                graficoPagamento.destroy();
+            }
+            
+            // Criar novo gráfico
+            graficoPagamento = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: formasPagamento,
+                    datasets: [{
+                        data: valores,
+                        backgroundColor: coresGrafico.slice(0, formasPagamento.length),
+                        borderColor: coresBordaGrafico.slice(0, formasPagamento.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const total = valores.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${formatarMoeda(value)} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function criarGraficoTopProdutos(vendasPeriodo) {
+            const ctx = document.getElementById('grafico-top-produtos').getContext('2d');
+            
+            // Agrupar produtos vendidos por quantidade
+            const produtosVendidos = {};
+            
+            vendasPeriodo.forEach(venda => {
+                venda.produtos.forEach(item => {
+                    const produto = produtos.find(p => p.id === item.produtoId);
+                    if (produto) {
+                        if (!produtosVendidos[produto.id]) {
+                            produtosVendidos[produto.id] = {
+                                nome: produto.nome,
+                                quantidade: 0,
+                                valor: 0
+                            };
+                        }
+                        
+                        produtosVendidos[produto.id].quantidade += item.quantidade;
+                        produtosVendidos[produto.id].valor += item.precoUnitario * item.quantidade;
+                    }
+                });
+            });
+            
+            // Converter para array e ordenar por quantidade
+            const produtosArray = Object.values(produtosVendidos);
+            produtosArray.sort((a, b) => b.quantidade - a.quantidade);
+            
+            // Pegar top 5
+            const topProdutos = produtosArray.slice(0, 5);
+            const nomes = topProdutos.map(p => p.nome.length > 20 ? p.nome.substring(0, 20) + '...' : p.nome);
+            const quantidades = topProdutos.map(p => p.quantidade);
+            const valores = topProdutos.map(p => p.valor);
+            
+            // Criar legenda
+            const legendaContainer = document.getElementById('legenda-top-produtos');
+            legendaContainer.innerHTML = '';
+            
+            topProdutos.forEach((produto, index) => {
+                const itemLegenda = document.createElement('div');
+                itemLegenda.className = 'item-legenda';
+                itemLegenda.innerHTML = `
+                    <div class="cor-legenda" style="background-color: ${coresGrafico[index % coresGrafico.length]};"></div>
+                    <span>${produto.nome}: ${produto.quantidade} un. (${formatarMoeda(produto.valor)})</span>
+                `;
+                legendaContainer.appendChild(itemLegenda);
+            });
+            
+            // Destruir gráfico anterior se existir
+            if (graficoTopProdutos) {
+                graficoTopProdutos.destroy();
+            }
+            
+            // Criar novo gráfico
+            graficoTopProdutos = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: nomes,
+                    datasets: [{
+                        label: 'Quantidade Vendida',
+                        data: quantidades,
+                        backgroundColor: coresGrafico.slice(0, topProdutos.length),
+                        borderColor: coresBordaGrafico.slice(0, topProdutos.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantidade'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const produto = topProdutos[context.dataIndex];
+                                    return [
+                                        `Produto: ${produto.nome}`,
+                                        `Quantidade: ${produto.quantidade}`,
+                                        `Valor Total: ${formatarMoeda(produto.valor)}`
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function carregarVendasPorCategoria(vendasPeriodo) {
+            const tbody = document.querySelector('#tabela-vendas-categoria tbody');
+            tbody.innerHTML = '';
+            
+            // Agrupar vendas por categoria
+            const vendasPorCategoria = {};
+            let totalGeral = 0;
+            let lucroTotal = 0;
+            
+            vendasPeriodo.forEach(venda => {
+                venda.produtos.forEach(item => {
+                    const produto = produtos.find(p => p.id === item.produtoId);
+                    if (produto) {
+                        const categoria = produto.categoria;
+                        const valorCategoria = item.precoUnitario * item.quantidade;
+                        const lucroCategoria = (item.precoUnitario - produto.precoCusto) * item.quantidade;
+                        
+                        if (!vendasPorCategoria[categoria]) {
+                            vendasPorCategoria[categoria] = {
+                                quantidade: 0,
+                                valor: 0,
+                                lucro: 0
+                            };
+                        }
+                        
+                        vendasPorCategoria[categoria].quantidade += item.quantidade;
+                        vendasPorCategoria[categoria].valor += valorCategoria;
+                        vendasPorCategoria[categoria].lucro += lucroCategoria;
+                        
+                        totalGeral += valorCategoria;
+                        lucroTotal += lucroCategoria;
+                    }
+                });
+            });
+            
+            // Adicionar linhas na tabela
+            for (const categoria in vendasPorCategoria) {
+                const porcentagem = totalGeral > 0 ? (vendasPorCategoria[categoria].valor / totalGeral * 100).toFixed(1) : 0;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${categoria}</td>
+                    <td>${vendasPorCategoria[categoria].quantidade}</td>
+                    <td>${formatarMoeda(vendasPorCategoria[categoria].valor)}</td>
+                    <td>${formatarMoeda(vendasPorCategoria[categoria].lucro)}</td>
+                    <td>${porcentagem}%</td>
+                `;
+                tbody.appendChild(row);
+            }
+            
+            // Adicionar linha de total
+            const totalRow = document.createElement('tr');
+            totalRow.style.fontWeight = 'bold';
+            totalRow.style.backgroundColor = 'var(--cinza-claro)';
+            totalRow.innerHTML = `
+                <td>TOTAL</td>
+                <td>${Object.values(vendasPorCategoria).reduce((sum, cat) => sum + cat.quantidade, 0)}</td>
+                <td>${formatarMoeda(totalGeral)}</td>
+                <td>${formatarMoeda(lucroTotal)}</td>
+                <td>100%</td>
+            `;
+            tbody.appendChild(totalRow);
+            
+            // Se não houver dados
+            if (Object.keys(vendasPorCategoria).length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="text-center">Nenhuma venda no período selecionado.</td>`;
+                tbody.appendChild(row);
+            }
+        }
+        
+        function carregarVendasPorPeriodo(dataInicio, dataFim) {
+            const tbody = document.querySelector('#tabela-vendas-periodo tbody');
+            tbody.innerHTML = '';
+            
+            // Determinar o tipo de agrupamento com base no período
+            const diffDias = Math.ceil((dataFim - dataInicio) / (1000 * 60 * 60 * 24));
+            let agrupamento;
+            
+            if (diffDias <= 1) {
+                agrupamento = 'hora';
+            } else if (diffDias <= 7) {
+                agrupamento = 'dia';
+            } else if (diffDias <= 30) {
+                agrupamento = 'dia';
+            } else if (diffDias <= 90) {
+                agrupamento = 'semana';
+            } else {
+                agrupamento = 'mes';
+            }
+            
+            // Agrupar vendas por período
+            const vendasAgrupadas = {};
+            const periodosOrdenados = [];
+            
+            vendas.forEach(venda => {
+                const dataVenda = new Date(venda.data);
+                
+                // Verificar se a venda está dentro do período
+                if (dataVenda < dataInicio || dataVenda > dataFim) {
+                    return;
+                }
+                
+                let chave;
+                let rotulo;
+                
+                switch(agrupamento) {
+                    case 'hora':
+                        chave = `${dataVenda.getFullYear()}-${(dataVenda.getMonth()+1).toString().padStart(2, '0')}-${dataVenda.getDate().toString().padStart(2, '0')}-${dataVenda.getHours().toString().padStart(2, '0')}`;
+                        rotulo = `${dataVenda.getDate().toString().padStart(2, '0')}/${(dataVenda.getMonth()+1).toString().padStart(2, '0')} ${dataVenda.getHours().toString().padStart(2, '0')}h`;
+                        break;
+                    case 'dia':
+                        chave = `${dataVenda.getFullYear()}-${(dataVenda.getMonth()+1).toString().padStart(2, '0')}-${dataVenda.getDate().toString().padStart(2, '0')}`;
+                        rotulo = `${dataVenda.getDate().toString().padStart(2, '0')}/${(dataVenda.getMonth()+1).toString().padStart(2, '0')}`;
+                        break;
+                    case 'semana':
+                        const semana = Math.ceil(dataVenda.getDate() / 7);
+                        chave = `${dataVenda.getFullYear()}-W${semana}`;
+                        rotulo = `Semana ${semana}`;
+                        break;
+                    case 'mes':
+                        chave = `${dataVenda.getFullYear()}-${(dataVenda.getMonth()+1).toString().padStart(2, '0')}`;
+                        rotulo = dataVenda.toLocaleDateString('pt-BR', { month: 'long' });
+                        break;
+                }
+                
+                if (!vendasAgrupadas[chave]) {
+                    vendasAgrupadas[chave] = {
+                        rotulo: rotulo,
                         quantidade: 0,
                         valor: 0,
                         lucro: 0
                     };
+                    periodosOrdenados.push(chave);
                 }
                 
                 vendasAgrupadas[chave].quantidade += 1;
@@ -3421,24 +4255,165 @@
                 vendasAgrupadas[chave].lucro += lucroVenda;
             });
             
+            // Ordenar períodos
+            periodosOrdenados.sort();
+            
             // Adicionar linhas na tabela
-            for (const periodo in vendasAgrupadas) {
+            let valorAnterior = null;
+            
+            periodosOrdenados.forEach((chave, index) => {
+                const dados = vendasAgrupadas[chave];
+                let variacao = '-';
+                
+                if (index > 0) {
+                    const chaveAnterior = periodosOrdenados[index - 1];
+                    const valorAnteriorPeriodo = vendasAgrupadas[chaveAnterior].valor;
+                    if (valorAnteriorPeriodo > 0) {
+                        const variacaoPercentual = ((dados.valor - valorAnteriorPeriodo) / valorAnteriorPeriodo * 100).toFixed(1);
+                        variacao = `${variacaoPercentual}%`;
+                    }
+                }
+                
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${periodo}</td>
-                    <td>${vendasAgrupadas[periodo].quantidade}</td>
-                    <td>${formatarMoeda(vendasAgrupadas[periodo].valor)}</td>
-                    <td>${formatarMoeda(vendasAgrupadas[periodo].lucro)}</td>
+                    <td>${dados.rotulo}</td>
+                    <td>${dados.quantidade}</td>
+                    <td>${formatarMoeda(dados.valor)}</td>
+                    <td>${formatarMoeda(dados.lucro)}</td>
+                    <td>${variacao}</td>
                 `;
                 tbody.appendChild(row);
-            }
+            });
             
             // Se não houver dados
-            if (Object.keys(vendasAgrupadas).length === 0) {
+            if (periodosOrdenados.length === 0) {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="4" class="text-center">Nenhuma venda no período selecionado.</td>`;
+                row.innerHTML = `<td colspan="5" class="text-center">Nenhuma venda no período selecionado.</td>`;
                 tbody.appendChild(row);
             }
+        }
+        
+        function carregarClientesAtivos(vendasPeriodo) {
+            const tbody = document.querySelector('#tabela-clientes-ativos tbody');
+            tbody.innerHTML = '';
+            
+            // Agrupar compras por cliente
+            const comprasPorCliente = {};
+            
+            vendasPeriodo.forEach(venda => {
+                if (venda.clienteId) {
+                    if (!comprasPorCliente[venda.clienteId]) {
+                        comprasPorCliente[venda.clienteId] = {
+                            quantidade: 0,
+                            valor: 0,
+                            ultimaCompra: venda.data
+                        };
+                    }
+                    
+                    comprasPorCliente[venda.clienteId].quantidade += 1;
+                    comprasPorCliente[venda.clienteId].valor += venda.total;
+                    
+                    // Atualizar última compra se mais recente
+                    if (new Date(venda.data) > new Date(comprasPorCliente[venda.clienteId].ultimaCompra)) {
+                        comprasPorCliente[venda.clienteId].ultimaCompra = venda.data;
+                    }
+                }
+            });
+            
+            // Converter para array e ordenar por valor gasto
+            const clientesArray = Object.keys(comprasPorCliente).map(clienteId => {
+                const cliente = clientes.find(c => c.id === parseInt(clienteId));
+                return {
+                    cliente,
+                    dados: comprasPorCliente[clienteId]
+                };
+            }).filter(item => item.cliente);
+            
+            clientesArray.sort((a, b) => b.dados.valor - a.dados.valor);
+            
+            // Pegar top 10 clientes
+            const topClientes = clientesArray.slice(0, 10);
+            
+            // Adicionar linhas na tabela
+            topClientes.forEach(item => {
+                const ticketMedio = item.dados.quantidade > 0 ? item.dados.valor / item.dados.quantidade : 0;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.cliente.nome}</td>
+                    <td>${item.dados.quantidade}</td>
+                    <td>${formatarMoeda(item.dados.valor)}</td>
+                    <td>${formatarData(item.dados.ultimaCompra)}</td>
+                    <td>${formatarMoeda(ticketMedio)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Se não houver dados
+            if (topClientes.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="text-center">Nenhum cliente com compras no período selecionado.</td>`;
+                tbody.appendChild(row);
+            }
+        }
+        
+        function mostrarModalPagamento() {
+            const formasPagamento = {};
+            
+            vendas.forEach(venda => {
+                const forma = venda.formaPagamento || 'Não informado';
+                if (!formasPagamento[forma]) {
+                    formasPagamento[forma] = 0;
+                }
+                formasPagamento[forma] += venda.total;
+            });
+            
+            let mensagem = 'Distribuição por Método de Pagamento:\n\n';
+            let total = Object.values(formasPagamento).reduce((a, b) => a + b, 0);
+            
+            for (const [forma, valor] of Object.entries(formasPagamento)) {
+                const porcentagem = ((valor / total) * 100).toFixed(1);
+                mensagem += `${forma}: ${formatarMoeda(valor)} (${porcentagem}%)\n`;
+            }
+            
+            alert(mensagem);
+        }
+        
+        function mostrarModalTopProdutos() {
+            const produtosVendidos = {};
+            
+            vendas.forEach(venda => {
+                venda.produtos.forEach(item => {
+                    const produto = produtos.find(p => p.id === item.produtoId);
+                    if (produto) {
+                        if (!produtosVendidos[produto.id]) {
+                            produtosVendidos[produto.id] = {
+                                nome: produto.nome,
+                                quantidade: 0,
+                                valor: 0
+                            };
+                        }
+                        
+                        produtosVendidos[produto.id].quantidade += item.quantidade;
+                        produtosVendidos[produto.id].valor += item.precoUnitario * item.quantidade;
+                    }
+                });
+            });
+            
+            // Converter para array e ordenar
+            const produtosArray = Object.values(produtosVendidos);
+            produtosArray.sort((a, b) => b.quantidade - a.quantidade);
+            
+            let mensagem = 'Top 10 Produtos Mais Vendidos:\n\n';
+            const top10 = produtosArray.slice(0, 10);
+            
+            top10.forEach((produto, index) => {
+                mensagem += `${index + 1}. ${produto.nome}\n`;
+                mensagem += `   Quantidade: ${produto.quantidade} unidades\n`;
+                mensagem += `   Valor Total: ${formatarMoeda(produto.valor)}\n\n`;
+            });
+            
+            alert(mensagem);
         }
         
         function gerarRelatorioFinanceiroPDF() {
@@ -3482,26 +4457,31 @@
             doc.text(`Período: ${periodoTexto}`, margin, yPos);
             yPos += 15;
             
-            // Resumo financeiro
+            // Indicadores
             doc.setFontSize(14);
             doc.setTextColor(173, 20, 87); // Rosa escuro
-            doc.text('Resumo Financeiro', margin, yPos);
+            doc.text('Indicadores Principais', margin, yPos);
             yPos += 10;
             
             doc.setFontSize(11);
             doc.setTextColor(0, 0, 0); // Preto
             
-            // Obter valores do resumo
-            const totalVendas = document.getElementById('vendas-mes').textContent;
-            const lucroTotal = document.getElementById('lucro-mes').textContent;
-            const ticketMedio = document.getElementById('ticket-medio').textContent;
+            // Obter valores dos indicadores
+            const indicadores = [
+                [`Vendas no Período:`, document.getElementById('vendas-periodo-indicador').textContent],
+                [`Lucro Líquido:`, document.getElementById('lucro-periodo-indicador').textContent],
+                [`Ticket Médio:`, document.getElementById('ticket-medio-indicador').textContent],
+                [`Produtos Vendidos:`, document.getElementById('produtos-vendidos-indicador').textContent],
+                [`Novos Clientes:`, document.getElementById('novos-clientes-indicador').textContent],
+                [`Taxa de Conversão:`, document.getElementById('conversao-indicador').textContent]
+            ];
             
-            doc.text(`Total de Vendas: ${totalVendas}`, margin, yPos);
-            yPos += 7;
-            doc.text(`Lucro Total: ${lucroTotal}`, margin, yPos);
-            yPos += 7;
-            doc.text(`Ticket Médio: ${ticketMedio}`, margin, yPos);
-            yPos += 15;
+            indicadores.forEach(([label, value]) => {
+                doc.text(`${label} ${value}`, margin, yPos);
+                yPos += 7;
+            });
+            
+            yPos += 10;
             
             // Vendas por categoria
             doc.setFontSize(14);
@@ -3513,16 +4493,17 @@
             const tabelaCategoria = document.querySelectorAll('#tabela-vendas-categoria tbody tr');
             const dadosCategoria = [];
             
-            dadosCategoria.push(['Categoria', 'Quantidade', 'Valor Total', '%']);
+            dadosCategoria.push(['Categoria', 'Quantidade', 'Valor Total', 'Lucro', '%']);
             
             tabelaCategoria.forEach(linha => {
                 const colunas = linha.querySelectorAll('td');
-                if (colunas.length === 4) {
+                if (colunas.length === 5) {
                     dadosCategoria.push([
                         colunas[0].textContent,
                         colunas[1].textContent,
                         colunas[2].textContent,
-                        colunas[3].textContent
+                        colunas[3].textContent,
+                        colunas[4].textContent
                     ]);
                 }
             });
@@ -3559,16 +4540,17 @@
             const tabelaPeriodo = document.querySelectorAll('#tabela-vendas-periodo tbody tr');
             const dadosPeriodo = [];
             
-            dadosPeriodo.push(['Período', 'Qtd Vendas', 'Valor Total', 'Lucro']);
+            dadosPeriodo.push(['Período', 'Qtd Vendas', 'Valor Total', 'Lucro', 'Variação']);
             
             tabelaPeriodo.forEach(linha => {
                 const colunas = linha.querySelectorAll('td');
-                if (colunas.length === 4) {
+                if (colunas.length === 5) {
                     dadosPeriodo.push([
                         colunas[0].textContent,
                         colunas[1].textContent,
                         colunas[2].textContent,
-                        colunas[3].textContent
+                        colunas[3].textContent,
+                        colunas[4].textContent
                     ]);
                 }
             });
@@ -3755,6 +4737,251 @@
             doc.save(nomeArquivo);
             
             mostrarMensagem('Relatório de estoque gerado com sucesso!', 'success');
+        }
+        
+        function gerarRelatorioClientePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Configurações do documento
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 15;
+            let yPos = margin;
+            
+            // Cabeçalho
+            doc.setFontSize(20);
+            doc.setTextColor(173, 20, 87); // Rosa escuro
+            doc.text('Relatório de Clientes - ' + configuracoes.nomeLoja, pageWidth / 2, yPos, { align: 'center' });
+            yPos += 10;
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0); // Preto
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            doc.text(`Data do relatório: ${dataAtual}`, margin, yPos);
+            yPos += 10;
+            
+            // Resumo de clientes
+            doc.setFontSize(14);
+            doc.setTextColor(173, 20, 87); // Rosa escuro
+            doc.text('Resumo de Clientes', margin, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0); // Preto
+            
+            // Calcular totais
+            const totalClientes = clientes.length;
+            const clientesAtivos = clientes.filter(c => c.totalCompras > 0).length;
+            const clientesInativos = totalClientes - clientesAtivos;
+            const ticketMedioGeral = clientesAtivos > 0 ? 
+                vendas.reduce((total, v) => total + v.total, 0) / clientesAtivos : 0;
+            
+            doc.text(`Total de Clientes: ${totalClientes}`, margin, yPos);
+            yPos += 7;
+            doc.text(`Clientes Ativos: ${clientesAtivos}`, margin, yPos);
+            yPos += 7;
+            doc.text(`Clientes Inativos: ${clientesInativos}`, margin, yPos);
+            yPos += 7;
+            doc.text(`Ticket Médio Geral: ${formatarMoeda(ticketMedioGeral)}`, margin, yPos);
+            yPos += 15;
+            
+            // Clientes mais ativos
+            doc.setFontSize(14);
+            doc.setTextColor(173, 20, 87); // Rosa escuro
+            doc.text('Clientes Mais Ativos', margin, yPos);
+            yPos += 10;
+            
+            // Preparar dados dos clientes mais ativos
+            const dadosClientesAtivos = [];
+            dadosClientesAtivos.push(['Cliente', 'Total Compras', 'Valor Gasto', 'Última Compra', 'Ticket Médio']);
+            
+            // Ordenar clientes por total de compras
+            const clientesOrdenados = [...clientes].filter(c => c.totalCompras > 0)
+                .sort((a, b) => b.totalCompras - a.totalCompras)
+                .slice(0, 10);
+            
+            clientesOrdenados.forEach(cliente => {
+                // Encontrar última compra do cliente
+                const vendasCliente = vendas.filter(v => v.clienteId === cliente.id);
+                const ultimaCompra = vendasCliente.length > 0 ? 
+                    vendasCliente.sort((a, b) => new Date(b.data) - new Date(a.data))[0].data : 'Nenhuma';
+                
+                // Calcular valor total gasto
+                const valorTotal = vendasCliente.reduce((total, v) => total + v.total, 0);
+                const ticketMedio = cliente.totalCompras > 0 ? valorTotal / cliente.totalCompras : 0;
+                
+                dadosClientesAtivos.push([
+                    cliente.nome,
+                    cliente.totalCompras.toString(),
+                    formatarMoeda(valorTotal),
+                    ultimaCompra !== 'Nenhuma' ? formatarDataParaExibicao(ultimaCompra) : 'Nenhuma',
+                    formatarMoeda(ticketMedio)
+                ]);
+            });
+            
+            if (dadosClientesAtivos.length > 1) {
+                doc.autoTable({
+                    startY: yPos,
+                    head: [dadosClientesAtivos[0]],
+                    body: dadosClientesAtivos.slice(1),
+                    theme: 'striped',
+                    headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
+                    margin: { left: margin, right: margin },
+                    columnStyles: {
+                        1: { halign: 'center' },
+                        2: { halign: 'right' },
+                        4: { halign: 'right' }
+                    }
+                });
+            } else {
+                doc.text('Nenhum cliente com compras registradas.', margin, yPos);
+            }
+            
+            // Rodapé
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.setTextColor(100, 100, 100); // Cinza
+                doc.text(`Página ${i} de ${totalPages}`, pageWidth / 2, doc.internal.pageSize.height - 10, { align: 'center' });
+            }
+            
+            // Salvar o PDF
+            const nomeArquivo = `Relatorio_Clientes_${configuracoes.nomeLoja.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.pdf`;
+            doc.save(nomeArquivo);
+            
+            mostrarMensagem('Relatório de clientes gerado com sucesso!', 'success');
+        }
+        
+        function exportarDashboard() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape');
+            
+            // Configurações do documento
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 15;
+            let yPos = margin;
+            
+            // Cabeçalho
+            doc.setFontSize(24);
+            doc.setTextColor(173, 20, 87); // Rosa escuro
+            doc.text('Dashboard de Relatórios - ' + configuracoes.nomeLoja, pageWidth / 2, yPos, { align: 'center' });
+            yPos += 10;
+            
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0); // Preto
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            doc.text(`Data do relatório: ${dataAtual}`, margin, yPos);
+            yPos += 10;
+            
+            // Período
+            const periodo = document.getElementById('relatorio-periodo').value;
+            let periodoTexto = '';
+            
+            switch(periodo) {
+                case 'hoje': periodoTexto = 'Hoje'; break;
+                case 'semana': periodoTexto = 'Esta Semana'; break;
+                case 'mes': periodoTexto = 'Este Mês'; break;
+                case 'trimestre': periodoTexto = 'Este Trimestre'; break;
+                case 'ano': periodoTexto = 'Este Ano'; break;
+                case 'personalizado': 
+                    const inicio = document.getElementById('relatorio-data-inicio').value;
+                    const fim = document.getElementById('relatorio-data-fim').value;
+                    periodoTexto = `De ${formatarDataParaExibicao(inicio)} até ${formatarDataParaExibicao(fim)}`;
+                    break;
+            }
+            
+            doc.text(`Período: ${periodoTexto}`, margin, yPos);
+            yPos += 15;
+            
+            // Indicadores em formato de tabela
+            doc.setFontSize(16);
+            doc.setTextColor(173, 20, 87); // Rosa escuro
+            doc.text('Indicadores Principais', pageWidth / 2, yPos, { align: 'center' });
+            yPos += 10;
+            
+            // Criar tabela de indicadores
+            const indicadores = [
+                ['Vendas no Período', document.getElementById('vendas-periodo-indicador').textContent],
+                ['Lucro Líquido', document.getElementById('lucro-periodo-indicador').textContent],
+                ['Ticket Médio', document.getElementById('ticket-medio-indicador').textContent],
+                ['Produtos Vendidos', document.getElementById('produtos-vendidos-indicador').textContent],
+                ['Novos Clientes', document.getElementById('novos-clientes-indicador').textContent],
+                ['Taxa de Conversão', document.getElementById('conversao-indicador').textContent]
+            ];
+            
+            // Adicionar tabela de indicadores
+            doc.autoTable({
+                startY: yPos,
+                head: [['Indicador', 'Valor']],
+                body: indicadores,
+                theme: 'grid',
+                headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
+                margin: { left: margin, right: margin }
+            });
+            
+            yPos = doc.lastAutoTable.finalY + 15;
+            
+            // Adicionar espaço para gráficos (em um relatório PDF real, você poderia
+            // converter os gráficos Canvas em imagens e adicioná-los ao PDF)
+            doc.setFontSize(16);
+            doc.setTextColor(173, 20, 87); // Rosa escuro
+            doc.text('Gráficos de Análise', pageWidth / 2, yPos, { align: 'center' });
+            yPos += 10;
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0); // Preto
+            doc.text('Nota: Os gráficos interativos estão disponíveis na versão web do sistema.', margin, yPos);
+            yPos += 20;
+            
+            // Rodapé
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.setTextColor(100, 100, 100); // Cinza
+                doc.text(`Página ${i} de ${totalPages}`, pageWidth / 2, doc.internal.pageSize.height - 10, { align: 'center' });
+            }
+            
+            // Salvar o PDF
+            const nomeArquivo = `Dashboard_${configuracoes.nomeLoja.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.pdf`;
+            doc.save(nomeArquivo);
+            
+            mostrarMensagem('Dashboard exportado com sucesso!', 'success');
+        }
+        
+        function exportarTabelaParaCSV(idTabela, nomeArquivo) {
+            const tabela = document.getElementById(idTabela);
+            const linhas = tabela.querySelectorAll('tr');
+            let csv = [];
+            
+            linhas.forEach(linha => {
+                const linhaDados = [];
+                const colunas = linha.querySelectorAll('td, th');
+                
+                colunas.forEach(coluna => {
+                    // Remover quebras de linha e vírgulas para evitar problemas no CSV
+                    let texto = coluna.textContent.trim();
+                    texto = texto.replace(/\n/g, ' ').replace(/,/g, ';');
+                    linhaDados.push(`"${texto}"`);
+                });
+                
+                csv.push(linhaDados.join(','));
+            });
+            
+            const csvString = csv.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${nomeArquivo}_${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            mostrarMensagem(`Tabela exportada como CSV: ${nomeArquivo}`, 'success');
         }
 
         // Funções para Configurações
