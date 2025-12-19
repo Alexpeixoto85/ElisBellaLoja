@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElisBella - Moda Feminina</title>
+    <title>ElisBella - Sistema de Gestão</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
@@ -14,11 +14,18 @@
             --rosa-suave: #f8bbd9;
             --rosa-principal: #f48fb1;
             --rosa-escuro: #ad1457;
+            --azul-claro: #e3f2fd;
+            --azul-suave: #bbdefb;
+            --azul-principal: #64b5f6;
+            --azul-escuro: #1976d2;
             --cinza-claro: #f5f5f5;
             --cinza-medio: #e0e0e0;
             --cinza-escuro: #424242;
             --branco: #ffffff;
             --sombra: rgba(0, 0, 0, 0.1);
+            --verde: #4caf50;
+            --vermelho: #f44336;
+            --amarelo: #ffc107;
         }
 
         * {
@@ -29,23 +36,130 @@
         }
 
         body {
-            background-color: var(--rosa-claro);
+            background: linear-gradient(135deg, var(--rosa-claro), var(--azul-claro));
             color: var(--cinza-escuro);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
+        /* Tela de Login */
+        #login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: var(--branco);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px var(--sombra);
+            width: 100%;
+            max-width: 450px;
+            border-top: 5px solid var(--rosa-principal);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo i {
+            font-size: 3.5rem;
+            color: var(--rosa-principal);
+            margin-bottom: 1rem;
+        }
+
+        .login-logo h1 {
+            font-size: 2rem;
+            color: var(--rosa-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-logo span {
+            color: var(--azul-escuro);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--cinza-escuro);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid var(--cinza-medio);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--rosa-principal);
+            box-shadow: 0 0 0 2px rgba(244, 143, 177, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--rosa-principal), var(--azul-principal));
+            color: var(--branco);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--cinza-escuro);
+        }
+
+        .login-footer a {
+            color: var(--azul-escuro);
+            text-decoration: none;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sistema Principal */
+        #main-system {
+            display: none;
+            min-height: 100vh;
         }
 
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--rosa-escuro), var(--rosa-principal));
+            background: linear-gradient(135deg, var(--rosa-escuro), var(--azul-escuro));
             color: var(--branco);
-            padding: 1.5rem 0;
+            padding: 1rem 0;
             box-shadow: 0 4px 12px var(--sombra);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
@@ -55,17 +169,17 @@
         }
 
         .logo i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
         }
 
         .logo h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 600;
         }
 
         .logo span {
             font-weight: 300;
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
         }
 
@@ -79,10 +193,46 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            position: relative;
         }
 
         .user-info i {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--sombra);
+            padding: 0.5rem 0;
+            min-width: 200px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .user-menu.active {
+            display: block;
+        }
+
+        .user-menu-item {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: var(--cinza-escuro);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .user-menu-item:hover {
+            background: var(--cinza-claro);
+        }
+
+        .user-menu-item i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
         }
 
         /* Menu de Navegação */
@@ -91,6 +241,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px var(--sombra);
             margin: 1.5rem 0;
+            overflow: hidden;
         }
 
         .nav-menu {
@@ -102,21 +253,38 @@
         .nav-item {
             flex: 1;
             text-align: center;
+            min-width: 120px;
         }
 
         .nav-link {
             display: block;
-            padding: 1.2rem 0;
+            padding: 1.2rem 0.5rem;
             color: var(--cinza-escuro);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rosa-principal), var(--azul-principal));
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            left: 0;
         }
 
         .nav-link:hover, .nav-link.active {
             color: var(--rosa-escuro);
-            border-bottom: 3px solid var(--rosa-escuro);
             background-color: var(--rosa-claro);
         }
 
@@ -124,7 +292,33 @@
             margin-right: 8px;
         }
 
+        /* Dashboard - Moda Feminina com Animação */
+        .dashboard-title-animation {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sliding-title {
+            display: inline-block;
+            animation: slideIn 1s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         /* Conteúdo Principal */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
         .main-content {
             background-color: var(--branco);
             border-radius: 10px;
@@ -138,10 +332,12 @@
             color: var(--rosa-escuro);
             margin-bottom: 1.5rem;
             padding-bottom: 0.8rem;
-            border-bottom: 2px solid var(--rosa-claro);
+            border-bottom: 2px solid var(--cinza-medio);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .section-title h2 {
@@ -151,9 +347,12 @@
 
         /* Botões */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             padding: 0.7rem 1.5rem;
-            background-color: var(--rosa-principal);
+            background: linear-gradient(135deg, var(--rosa-principal), var(--azul-principal));
             color: var(--branco);
             border: none;
             border-radius: 5px;
@@ -165,19 +364,28 @@
         }
 
         .btn:hover {
-            background-color: var(--rosa-escuro);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px var(--sombra);
         }
 
         .btn-secondary {
-            background-color: var(--cinza-medio);
-            color: var(--cinza-escuro);
+            background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
         }
 
         .btn-secondary:hover {
-            background-color: var(--cinza-escuro);
-            color: var(--branco);
+            background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--verde), #2e7d32);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--amarelo), #ff8f00);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--vermelho), #c62828);
         }
 
         .btn-small {
@@ -194,10 +402,12 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 1.2rem;
+            flex-wrap: wrap;
         }
 
         .form-row .form-group {
             flex: 1;
+            min-width: 200px;
         }
 
         label {
@@ -219,26 +429,29 @@
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--rosa-principal);
+            box-shadow: 0 0 0 2px rgba(244, 143, 177, 0.2);
         }
 
         /* Tabelas */
         .table-container {
             overflow-x: auto;
             margin-top: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--cinza-medio);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1.5rem;
         }
 
         table th {
-            background-color: var(--rosa-claro);
+            background: linear-gradient(135deg, var(--rosa-claro), var(--azul-claro));
             color: var(--rosa-escuro);
             text-align: left;
             padding: 1rem;
             font-weight: 600;
+            border-bottom: 2px solid var(--cinza-medio);
         }
 
         table td {
@@ -253,6 +466,7 @@
         .actions {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         /* Cards do Dashboard */
@@ -269,7 +483,8 @@
             padding: 1.5rem;
             box-shadow: 0 4px 8px var(--sombra);
             transition: transform 0.3s ease;
-            border-top: 4px solid var(--rosa-principal);
+            border-top: 4px solid;
+            border-image: linear-gradient(90deg, var(--rosa-principal), var(--azul-principal)) 1;
         }
 
         .card:hover {
@@ -302,7 +517,7 @@
         .card-footer {
             margin-top: 1rem;
             font-size: 0.9rem;
-            color: var(--rosa-principal);
+            color: var(--azul-escuro);
         }
 
         /* Mensagens */
@@ -327,6 +542,20 @@
             display: block;
         }
 
+        .message.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            display: block;
+        }
+
+        .message.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -337,7 +566,155 @@
             margin-top: 2rem;
         }
 
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cinza-medio);
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--rosa-escuro);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--cinza-escuro);
+            cursor: pointer;
+        }
+
+        /* Inatividade */
+        .inactivity-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inactivity-overlay.active {
+            display: flex;
+        }
+
+        .inactivity-modal {
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .inactivity-timer {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--vermelho);
+            margin: 1.5rem 0;
+        }
+
+        /* Recibo Térmico */
+        .thermal-receipt {
+            font-family: 'Courier New', monospace;
+            background-color: white;
+            color: black;
+            padding: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+            border: 1px dashed #ccc;
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .receipt-header h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .receipt-items {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+
+        .receipt-items th, .receipt-items td {
+            padding: 3px 0;
+        }
+
+        .receipt-total {
+            border-top: 1px dashed #000;
+            padding-top: 10px;
+            margin-top: 10px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        /* Status de Estoque */
+        .status-ok {
+            color: var(--verde);
+            font-weight: bold;
+        }
+
+        .status-low {
+            color: var(--amarelo);
+            font-weight: bold;
+        }
+
+        .status-out {
+            color: var(--vermelho);
+            font-weight: bold;
+        }
+
         /* Responsividade */
+        @media (max-width: 1200px) {
+            .nav-item {
+                min-width: 100px;
+            }
+        }
+
         @media (max-width: 992px) {
             .nav-menu {
                 flex-direction: column;
@@ -346,6 +723,10 @@
             .form-row {
                 flex-direction: column;
                 gap: 0;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             }
         }
 
@@ -357,17 +738,11 @@
             }
             
             .dashboard-cards {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: 1fr;
             }
             
             .main-content {
                 padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logo h1 {
-                font-size: 1.5rem;
             }
             
             .section-title {
@@ -376,18 +751,36 @@
                 gap: 1rem;
             }
             
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo i {
+                font-size: 1.8rem;
+            }
+            
             .card-value {
                 font-size: 1.5rem;
             }
             
-            .actions {
-                flex-direction: column;
+            .login-container {
+                padding: 1.5rem;
             }
         }
 
         /* Utilitários */
         .hidden {
             display: none !important;
+        }
+
+        .visible {
+            display: block !important;
         }
 
         .text-center {
@@ -398,720 +791,1183 @@
         .mt-2 { margin-top: 2rem; }
         .mb-1 { margin-bottom: 1rem; }
         .mb-2 { margin-bottom: 2rem; }
+        .ml-1 { margin-left: 1rem; }
+        .mr-1 { margin-right: 1rem; }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-1 {
+            gap: 1rem;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Aviso de Backup ao Sair */
+        #backup-warning {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--amarelo);
+            color: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            z-index: 1000;
+            display: none;
+        }
+
+        #backup-warning.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        #backup-warning .btn {
+            margin-top: 0.5rem;
+            background: var(--azul-escuro);
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-tshirt"></i>
-                    <div>
-                        <h1>ElisBella <span>Moda Feminina</span></h1>
-                    </div>
+    <!-- Tela de Login -->
+    <div id="login-screen">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-tshirt"></i>
+                <h1>ElisBella</h1>
+                <span>Sistema de Gestão de Moda Feminina</span>
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="message error" id="login-error"></div>
+                
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
-                <div class="user-info">
-                    <i class="fas fa-user-circle"></i>
-                    <div>
-                        <div>Administrador</div>
-                        <div>Loja Moda Feminina</div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Primeiro acesso? <a href="#" id="register-link">Cadastre-se aqui</a></p>
+                <p class="mt-1"><small>Sistema desenvolvido para gestão de moda feminina</small></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="main-system">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-tshirt"></i>
+                        <div>
+                            <h1 id="store-name">ElisBella</h1>
+                            <span>Sistema de Gestão</span>
+                        </div>
+                    </div>
+                    
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <div>
+                            <div id="current-user">Administrador</div>
+                            <div id="current-store">Loja Moda Feminina</div>
+                        </div>
+                        <i class="fas fa-chevron-down ml-1" id="user-menu-toggle"></i>
+                        
+                        <div class="user-menu" id="user-menu">
+                            <a href="#" class="user-menu-item" data-section="configuracoes">
+                                <i class="fas fa-cog"></i> Configurações
+                            </a>
+                            <a href="#" class="user-menu-item" data-section="usuarios">
+                                <i class="fas fa-users-cog"></i> Gerenciar Usuários
+                            </a>
+                            <a href="#" class="user-menu-item" id="backup-menu">
+                                <i class="fas fa-database"></i> Backup/Restore
+                            </a>
+                            <a href="#" class="user-menu-item" id="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Sair
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </header>
+
+        <div class="container">
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#" class="nav-link active" data-section="moda-feminina"><i class="fas fa-home"></i> Moda Feminina</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-section="clientes"><i class="fas fa-users"></i> Clientes</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-section="produtos"><i class="fas fa-tshirt"></i> Produtos</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-section="estoque"><i class="fas fa-boxes"></i> Estoque</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-section="vendas"><i class="fas fa-shopping-cart"></i> Vendas</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-section="relatorios"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
+                </ul>
+            </nav>
+
+            <main class="main-content">
+                <!-- Dashboard - Moda Feminina -->
+                <section id="moda-feminina-section">
+                    <div class="section-title dashboard-title-animation">
+                        <h2><i class="fas fa-home"></i> <span class="sliding-title">Moda Feminina</span></h2>
+                        <div>Hoje: <span id="data-atual"></span></div>
+                    </div>
+
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Vendas Hoje</h3>
+                                <i class="fas fa-shopping-cart card-icon"></i>
+                            </div>
+                            <div class="card-value" id="vendas-hoje">R$ 0,00</div>
+                            <div class="card-footer">Total de vendas realizadas hoje</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Produtos em Estoque</h3>
+                                <i class="fas fa-boxes card-icon"></i>
+                            </div>
+                            <div class="card-value" id="produtos-estoque">0</div>
+                            <div class="card-footer">Itens disponíveis para venda</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Clientes Cadastrados</h3>
+                                <i class="fas fa-users card-icon"></i>
+                            </div>
+                            <div class="card-value" id="total-clientes">0</div>
+                            <div class="card-footer">Total de clientes no sistema</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Valor em Estoque</h3>
+                                <i class="fas fa-dollar-sign card-icon"></i>
+                            </div>
+                            <div class="card-value" id="valor-estoque">R$ 0,00</div>
+                            <div class="card-footer">Valor total do estoque atual</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title mt-2">
+                        <h3><i class="fas fa-chart-line"></i> Vendas Recentes</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabela-vendas-recentes">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Cliente</th>
+                                    <th>Produtos</th>
+                                    <th>Valor Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Vendas recentes serão inseridas aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Clientes -->
+                <section id="clientes-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-users"></i> Gestão de Clientes</h2>
+                        <button class="btn" id="btn-novo-cliente"><i class="fas fa-plus"></i> Novo Cliente</button>
+                    </div>
+
+                    <div id="form-cliente" class="hidden mb-2">
+                        <h3 class="mb-1" id="form-cliente-titulo">Cadastrar Novo Cliente</h3>
+                        <form id="cliente-form">
+                            <input type="hidden" id="cliente-id">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cliente-nome">Nome Completo *</label>
+                                    <input type="text" id="cliente-nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente-cpf">CPF</label>
+                                    <input type="text" id="cliente-cpf" placeholder="000.000.000-00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cliente-email">E-mail</label>
+                                    <input type="email" id="cliente-email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente-telefone">Telefone *</label>
+                                    <input type="text" id="cliente-telefone" placeholder="(11) 99999-9999" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cliente-endereco">Endereço</label>
+                                    <input type="text" id="cliente-endereco">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente-data-nascimento">Data de Nascimento</label>
+                                    <input type="date" id="cliente-data-nascimento">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <button type="submit" class="btn" id="btn-salvar-cliente">Salvar Cliente</button>
+                                    <button type="button" class="btn btn-secondary" id="btn-cancelar-cliente">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="tabela-clientes">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Telefone</th>
+                                    <th>E-mail</th>
+                                    <th>Total Compras</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Clientes serão inseridos aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Produtos -->
+                <section id="produtos-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-tshirt"></i> Gestão de Produtos</h2>
+                        <button class="btn" id="btn-novo-produto"><i class="fas fa-plus"></i> Novo Produto</button>
+                    </div>
+
+                    <div id="form-produto" class="hidden mb-2">
+                        <h3 class="mb-1" id="form-produto-titulo">Cadastrar Novo Produto</h3>
+                        <form id="produto-form">
+                            <input type="hidden" id="produto-id">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produto-nome">Nome do Produto *</label>
+                                    <input type="text" id="produto-nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="produto-categoria">Categoria *</label>
+                                    <select id="produto-categoria" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Vestidos">Vestidos</option>
+                                        <option value="Blusas">Blusas</option>
+                                        <option value="Calças">Calças</option>
+                                        <option value="Saias">Saias</option>
+                                        <option value="Casacos">Casacos</option>
+                                        <option value="Roupas Íntimas">Roupas Íntimas</option>
+                                        <option value="Acessórios">Acessórios</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produto-tamanho">Tamanho</label>
+                                    <select id="produto-tamanho">
+                                        <option value="">Selecione</option>
+                                        <option value="PP">PP</option>
+                                        <option value="P">P</option>
+                                        <option value="M">M</option>
+                                        <option value="G">G</option>
+                                        <option value="GG">GG</option>
+                                        <option value="Único">Único</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="produto-cor">Cor</label>
+                                    <input type="text" id="produto-cor" placeholder="Ex: Preto, Vermelho, Estampado">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produto-preco-custo">Preço de Custo *</label>
+                                    <input type="number" id="produto-preco-custo" step="0.01" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="produto-preco-venda">Preço de Venda *</label>
+                                    <input type="number" id="produto-preco-venda" step="0.01" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="produto-quantidade">Quantidade em Estoque *</label>
+                                    <input type="number" id="produto-quantidade" min="0" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produto-descricao">Descrição</label>
+                                    <textarea id="produto-descricao" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <button type="submit" class="btn" id="btn-salvar-produto">Salvar Produto</button>
+                                    <button type="button" class="btn btn-secondary" id="btn-cancelar-produto">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="tabela-produtos">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Tamanho</th>
+                                    <th>Preço Venda</th>
+                                    <th>Estoque</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Produtos serão inseridos aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Estoque -->
+                <section id="estoque-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-boxes"></i> Gestão de Estoque</h2>
+                        <div>
+                            <button class="btn" id="btn-ajustar-estoque"><i class="fas fa-exchange-alt"></i> Ajustar Estoque</button>
+                            <button class="btn btn-secondary" id="btn-relatorio-estoque-pdf"><i class="fas fa-file-pdf"></i> Relatório PDF</button>
+                        </div>
+                    </div>
+
+                    <div id="form-ajuste-estoque" class="hidden mb-2">
+                        <h3 class="mb-1">Ajuste de Estoque</h3>
+                        <form id="ajuste-estoque-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ajuste-produto">Produto *</label>
+                                    <select id="ajuste-produto" required>
+                                        <option value="">Selecione um produto</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ajuste-tipo">Tipo de Ajuste *</label>
+                                    <select id="ajuste-tipo" required>
+                                        <option value="">Selecione</option>
+                                        <option value="entrada">Entrada (Adicionar)</option>
+                                        <option value="saida">Saída (Remover)</option>
+                                        <option value="correcao">Correção (Alterar)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ajuste-quantidade">Quantidade *</label>
+                                    <input type="number" id="ajuste-quantidade" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ajuste-motivo">Motivo *</label>
+                                    <input type="text" id="ajuste-motivo" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <button type="submit" class="btn" id="btn-salvar-ajuste">Salvar Ajuste</button>
+                                    <button type="button" class="btn btn-secondary" id="btn-cancelar-ajuste">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="tabela-estoque">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Categoria</th>
+                                    <th>Tamanho</th>
+                                    <th>Estoque Atual</th>
+                                    <th>Valor Unitário</th>
+                                    <th>Valor Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Estoque será inserido aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section-title mt-2">
+                        <h3><i class="fas fa-history"></i> Histórico de Ajustes de Estoque</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabela-historico-estoque">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Produto</th>
+                                    <th>Tipo</th>
+                                    <th>Quantidade</th>
+                                    <th>Motivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Histórico será inserido aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Vendas -->
+                <section id="vendas-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-shopping-cart"></i> Gestão de Vendas</h2>
+                        <button class="btn" id="btn-nova-venda"><i class="fas fa-plus"></i> Nova Venda</button>
+                    </div>
+
+                    <div id="form-venda" class="hidden mb-2">
+                        <h3 class="mb-1">Registrar Nova Venda</h3>
+                        <form id="venda-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="venda-cliente">Cliente</label>
+                                    <select id="venda-cliente">
+                                        <option value="">Cliente não identificado</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="venda-data">Data da Venda</label>
+                                    <input type="datetime-local" id="venda-data">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="venda-produto">Adicionar Produto</label>
+                                    <select id="venda-produto">
+                                        <option value="">Selecione um produto</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="venda-quantidade">Quantidade</label>
+                                    <input type="number" id="venda-quantidade" min="1" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn" id="btn-adicionar-item">Adicionar Item</button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container mt-1">
+                                <table id="tabela-itens-venda">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th>Subtotal</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itens-venda-corpo">
+                                        <!-- Itens da venda serão inseridos aqui -->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-center"><strong>Total da Venda</strong></td>
+                                            <td><strong id="venda-total">R$ 0,00</strong></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            
+                            <div class="form-row mt-2">
+                                <div class="form-group">
+                                    <label for="venda-forma-pagamento">Forma de Pagamento *</label>
+                                    <select id="venda-forma-pagamento" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Dinheiro">Dinheiro</option>
+                                        <option value="Cartão Débito">Cartão Débito</option>
+                                        <option value="Cartão Crédito">Cartão Crédito</option>
+                                        <option value="PIX">PIX</option>
+                                        <option value="Transferência">Transferência</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="venda-observacoes">Observações</label>
+                                    <textarea id="venda-observacoes" rows="2"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <button type="submit" class="btn" id="btn-finalizar-venda">Finalizar Venda</button>
+                                    <button type="button" class="btn btn-secondary" id="btn-cancelar-venda">Cancelar Venda</button>
+                                    <button type="button" class="btn btn-success" id="btn-imprimir-recibo"><i class="fas fa-print"></i> Imprimir Recibo</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="tabela-vendas">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Cliente</th>
+                                    <th>Produtos</th>
+                                    <th>Valor Total</th>
+                                    <th>Pagamento</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Vendas serão inseridas aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Relatórios -->
+                <section id="relatorios-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-chart-bar"></i> Relatórios</h2>
+                        <div>
+                            <button class="btn" id="btn-gerar-relatorio"><i class="fas fa-sync-alt"></i> Atualizar Dados</button>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-cards mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Vendas do Mês</h3>
+                                <i class="fas fa-chart-line card-icon"></i>
+                            </div>
+                            <div class="card-value" id="vendas-mes">R$ 0,00</div>
+                            <div class="card-footer">Total de vendas no mês atual</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Lucro do Mês</h3>
+                                <i class="fas fa-money-bill-wave card-icon"></i>
+                            </div>
+                            <div class="card-value" id="lucro-mes">R$ 0,00</div>
+                            <div class="card-footer">Lucro líquido no mês atual</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Produtos Mais Vendidos</h3>
+                                <i class="fas fa-star card-icon"></i>
+                            </div>
+                            <div class="card-value" id="produtos-vendidos">0</div>
+                            <div class="card-footer">Total de produtos vendidos no mês</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Ticket Médio</h3>
+                                <i class="fas fa-receipt card-icon"></i>
+                            </div>
+                            <div class="card-value" id="ticket-medio">R$ 0,00</div>
+                            <div class="card-footer">Valor médio por venda</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="relatorio-periodo">Período do Relatório</label>
+                            <select id="relatorio-periodo">
+                                <option value="hoje">Hoje</option>
+                                <option value="semana">Esta Semana</option>
+                                <option value="mes" selected>Este Mês</option>
+                                <option value="trimestre">Este Trimestre</option>
+                                <option value="ano">Este Ano</option>
+                                <option value="personalizado">Personalizado</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="relatorio-data-inicio-container" style="display: none;">
+                            <label for="relatorio-data-inicio">Data Início</label>
+                            <input type="date" id="relatorio-data-inicio">
+                        </div>
+                        <div class="form-group" id="relatorio-data-fim-container" style="display: none;">
+                            <label for="relatorio-data-fim">Data Fim</label>
+                            <input type="date" id="relatorio-data-fim">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button class="btn" id="btn-gerar-relatorio-financeiro-pdf"><i class="fas fa-file-pdf"></i> Relatório Financeiro PDF</button>
+                            <button class="btn btn-secondary" id="btn-gerar-relatorio-estoque-pdf"><i class="fas fa-file-pdf"></i> Relatório Estoque PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="section-title mt-2">
+                        <h3><i class="fas fa-chart-pie"></i> Vendas por Categoria</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabela-vendas-categoria">
+                            <thead>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Quantidade Vendida</th>
+                                    <th>Valor Total</th>
+                                    <th>% do Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Vendas por categoria serão inseridas aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section-title mt-2">
+                        <h3><i class="fas fa-calendar-alt"></i> Vendas por Período</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabela-vendas-periodo">
+                            <thead>
+                                <tr>
+                                    <th>Período</th>
+                                    <th>Quantidade de Vendas</th>
+                                    <th>Valor Total</th>
+                                    <th>Lucro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Vendas por período serão inseridas aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Configurações -->
+                <section id="configuracoes-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-cog"></i> Configurações da Loja</h2>
+                    </div>
+
+                    <form id="configuracoes-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="config-nome-loja">Nome da Loja *</label>
+                                <input type="text" id="config-nome-loja" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="config-cnpj">CNPJ</label>
+                                <input type="text" id="config-cnpj" placeholder="00.000.000/0000-00">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="config-telefone">Telefone</label>
+                                <input type="text" id="config-telefone" placeholder="(11) 99999-9999">
+                            </div>
+                            <div class="form-group">
+                                <label for="config-email">E-mail</label>
+                                <input type="email" id="config-email">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="config-endereco">Endereço</label>
+                                <input type="text" id="config-endereco">
+                            </div>
+                            <div class="form-group">
+                                <label for="config-cidade">Cidade</label>
+                                <input type="text" id="config-cidade">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="config-inatividade">Tempo de Inatividade (minutos)</label>
+                                <input type="number" id="config-inatividade" min="1" value="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="config-backup-warning">Aviso de Backup ao Sair</label>
+                                <select id="config-backup-warning">
+                                    <option value="sim">Sim</option>
+                                    <option value="nao">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <button type="submit" class="btn">Salvar Configurações</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Gerenciamento de Usuários -->
+                <section id="usuarios-section" class="hidden">
+                    <div class="section-title">
+                        <h2><i class="fas fa-users-cog"></i> Gerenciamento de Usuários</h2>
+                        <button class="btn" id="btn-novo-usuario"><i class="fas fa-plus"></i> Novo Usuário</button>
+                    </div>
+
+                    <div id="form-usuario" class="hidden mb-2">
+                        <h3 class="mb-1" id="form-usuario-titulo">Cadastrar Novo Usuário</h3>
+                        <form id="usuario-form">
+                            <input type="hidden" id="usuario-id">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="usuario-nome">Nome Completo *</label>
+                                    <input type="text" id="usuario-nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="usuario-username">Nome de Usuário *</label>
+                                    <input type="text" id="usuario-username" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="usuario-email">E-mail</label>
+                                    <input type="email" id="usuario-email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="usuario-perfil">Perfil de Acesso *</label>
+                                    <select id="usuario-perfil" required>
+                                        <option value="">Selecione</option>
+                                        <option value="admin">Administrador</option>
+                                        <option value="vendedor">Vendedor</option>
+                                        <option value="estoque">Estoque</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="usuario-senha">Senha *</label>
+                                    <input type="password" id="usuario-senha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="usuario-confirmar-senha">Confirmar Senha *</label>
+                                    <input type="password" id="usuario-confirmar-senha" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <button type="submit" class="btn" id="btn-salvar-usuario">Salvar Usuário</button>
+                                    <button type="button" class="btn btn-secondary" id="btn-cancelar-usuario">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table id="tabela-usuarios">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Usuário</th>
+                                    <th>E-mail</th>
+                                    <th>Perfil</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Usuários serão inseridos aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <div id="mensagem" class="message"></div>
+            </main>
+
+            <footer>
+                <p id="footer-store-name">ElisBella - Moda Feminina &copy; <span id="ano-atual"></span></p>
+                <p>Desenvolvido por Alex Peixoto @Direitos Reservados</p>
+            </footer>
         </div>
-    </header>
+    </div>
 
-    <div class="container">
-        <nav>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#" class="nav-link active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="#" class="nav-link" data-section="clientes"><i class="fas fa-users"></i> Clientes</a></li>
-                <li class="nav-item"><a href="#" class="nav-link" data-section="produtos"><i class="fas fa-tshirt"></i> Produtos</a></li>
-                <li class="nav-item"><a href="#" class="nav-link" data-section="estoque"><i class="fas fa-boxes"></i> Estoque</a></li>
-                <li class="nav-item"><a href="#" class="nav-link" data-section="vendas"><i class="fas fa-shopping-cart"></i> Vendas</a></li>
-                <li class="nav-item"><a href="#" class="nav-link" data-section="relatorios"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
-            </ul>
-        </nav>
+    <!-- Modal de Backup -->
+    <div class="modal" id="backup-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-database"></i> Backup e Restauração</h3>
+                <button class="modal-close" id="backup-modal-close">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <h4>Exportar Dados</h4>
+                <p>Exporte todos os dados do sistema para um arquivo de backup.</p>
+                <button class="btn w-100" id="btn-exportar-backup">
+                    <i class="fas fa-download"></i> Exportar Backup
+                </button>
+            </div>
+            
+            <div class="form-group mt-2">
+                <h4>Importar Dados</h4>
+                <p>Importe dados de um backup anterior.</p>
+                <input type="file" id="backup-file" accept=".json" class="w-100">
+                <button class="btn btn-secondary w-100 mt-1" id="btn-importar-backup">
+                    <i class="fas fa-upload"></i> Importar Backup
+                </button>
+            </div>
+            
+            <div class="form-group mt-2">
+                <h4>Limpar Dados</h4>
+                <p>Remova todos os dados do sistema (cuidado: esta ação não pode ser desfeita).</p>
+                <button class="btn btn-danger w-100" id="btn-limpar-dados">
+                    <i class="fas fa-trash"></i> Limpar Todos os Dados
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <main class="main-content">
-            <!-- Dashboard -->
-            <section id="dashboard-section">
-                <div class="section-title">
-                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
-                    <div>Hoje: <span id="data-atual"></span></div>
-                </div>
+    <!-- Overlay de Inatividade -->
+    <div class="inactivity-overlay" id="inactivity-overlay">
+        <div class="inactivity-modal">
+            <h3><i class="fas fa-clock"></i> Sessão Expirada</h3>
+            <p>Você ficou inativo por muito tempo. Por favor, faça login novamente.</p>
+            <div class="inactivity-timer" id="inactivity-timer">60</div>
+            <button class="btn" id="btn-reiniciar-sessao">Continuar Sessão</button>
+        </div>
+    </div>
 
-                <div class="dashboard-cards">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Vendas Hoje</h3>
-                            <i class="fas fa-shopping-cart card-icon"></i>
-                        </div>
-                        <div class="card-value" id="vendas-hoje">R$ 0,00</div>
-                        <div class="card-footer">Total de vendas realizadas hoje</div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Produtos em Estoque</h3>
-                            <i class="fas fa-boxes card-icon"></i>
-                        </div>
-                        <div class="card-value" id="produtos-estoque">0</div>
-                        <div class="card-footer">Itens disponíveis para venda</div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Clientes Cadastrados</h3>
-                            <i class="fas fa-users card-icon"></i>
-                        </div>
-                        <div class="card-value" id="total-clientes">0</div>
-                        <div class="card-footer">Total de clientes no sistema</div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Valor em Estoque</h3>
-                            <i class="fas fa-dollar-sign card-icon"></i>
-                        </div>
-                        <div class="card-value" id="valor-estoque">R$ 0,00</div>
-                        <div class="card-footer">Valor total do estoque atual</div>
-                    </div>
-                </div>
+    <!-- Aviso de Backup ao Sair -->
+    <div id="backup-warning">
+        <p><i class="fas fa-exclamation-triangle"></i> <strong>Atenção!</strong> Faça backup dos seus dados antes de sair.</p>
+        <button class="btn btn-small" id="btn-backup-rapido">Fazer Backup Agora</button>
+        <button class="btn btn-secondary btn-small" id="btn-ignorar-backup">Ignorar</button>
+    </div>
 
-                <div class="section-title mt-2">
-                    <h3><i class="fas fa-chart-line"></i> Vendas Recentes</h3>
+    <!-- Modal de Registro -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Cadastrar Primeiro Usuário</h3>
+            </div>
+            
+            <form id="register-form">
+                <div class="message error" id="register-error"></div>
+                
+                <div class="form-group">
+                    <label for="register-nome">Nome Completo *</label>
+                    <input type="text" id="register-nome" required>
                 </div>
                 
-                <div class="table-container">
-                    <table id="tabela-vendas-recentes">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Cliente</th>
-                                <th>Produtos</th>
-                                <th>Valor Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Vendas recentes serão inseridas aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Clientes -->
-            <section id="clientes-section" class="hidden">
-                <div class="section-title">
-                    <h2><i class="fas fa-users"></i> Gestão de Clientes</h2>
-                    <button class="btn" id="btn-novo-cliente"><i class="fas fa-plus"></i> Novo Cliente</button>
-                </div>
-
-                <div id="form-cliente" class="hidden mb-2">
-                    <h3 class="mb-1" id="form-cliente-titulo">Cadastrar Novo Cliente</h3>
-                    <form id="cliente-form">
-                        <input type="hidden" id="cliente-id">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="cliente-nome">Nome Completo *</label>
-                                <input type="text" id="cliente-nome" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente-cpf">CPF</label>
-                                <input type="text" id="cliente-cpf" placeholder="000.000.000-00">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="cliente-email">E-mail</label>
-                                <input type="email" id="cliente-email">
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente-telefone">Telefone *</label>
-                                <input type="text" id="cliente-telefone" placeholder="(11) 99999-9999" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="cliente-endereco">Endereço</label>
-                                <input type="text" id="cliente-endereco">
-                            </div>
-                            <div class="form-group">
-                                <label for="cliente-data-nascimento">Data de Nascimento</label>
-                                <input type="date" id="cliente-data-nascimento">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <button type="submit" class="btn" id="btn-salvar-cliente">Salvar Cliente</button>
-                                <button type="button" class="btn btn-secondary" id="btn-cancelar-cliente">Cancelar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="table-container">
-                    <table id="tabela-clientes">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Telefone</th>
-                                <th>E-mail</th>
-                                <th>Total Compras</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Clientes serão inseridos aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Produtos -->
-            <section id="produtos-section" class="hidden">
-                <div class="section-title">
-                    <h2><i class="fas fa-tshirt"></i> Gestão de Produtos</h2>
-                    <button class="btn" id="btn-novo-produto"><i class="fas fa-plus"></i> Novo Produto</button>
-                </div>
-
-                <div id="form-produto" class="hidden mb-2">
-                    <h3 class="mb-1" id="form-produto-titulo">Cadastrar Novo Produto</h3>
-                    <form id="produto-form">
-                        <input type="hidden" id="produto-id">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="produto-nome">Nome do Produto *</label>
-                                <input type="text" id="produto-nome" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="produto-categoria">Categoria *</label>
-                                <select id="produto-categoria" required>
-                                    <option value="">Selecione</option>
-                                    <option value="Vestidos">Vestidos</option>
-                                    <option value="Blusas">Blusas</option>
-                                    <option value="Calças">Calças</option>
-                                    <option value="Saias">Saias</option>
-                                    <option value="Casacos">Casacos</option>
-                                    <option value="Roupas Íntimas">Roupas Íntimas</option>
-                                    <option value="Acessórios">Acessórios</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="produto-tamanho">Tamanho</label>
-                                <select id="produto-tamanho">
-                                    <option value="">Selecione</option>
-                                    <option value="PP">PP</option>
-                                    <option value="P">P</option>
-                                    <option value="M">M</option>
-                                    <option value="G">G</option>
-                                    <option value="GG">GG</option>
-                                    <option value="Único">Único</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="produto-cor">Cor</label>
-                                <input type="text" id="produto-cor" placeholder="Ex: Preto, Vermelho, Estampado">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="produto-preco-custo">Preço de Custo *</label>
-                                <input type="number" id="produto-preco-custo" step="0.01" min="0" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="produto-preco-venda">Preço de Venda *</label>
-                                <input type="number" id="produto-preco-venda" step="0.01" min="0" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="produto-quantidade">Quantidade em Estoque *</label>
-                                <input type="number" id="produto-quantidade" min="0" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="produto-descricao">Descrição</label>
-                                <textarea id="produto-descricao" rows="3"></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <button type="submit" class="btn" id="btn-salvar-produto">Salvar Produto</button>
-                                <button type="button" class="btn btn-secondary" id="btn-cancelar-produto">Cancelar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="table-container">
-                    <table id="tabela-produtos">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Categoria</th>
-                                <th>Tamanho</th>
-                                <th>Preço Venda</th>
-                                <th>Estoque</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Produtos serão inseridos aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Estoque -->
-            <section id="estoque-section" class="hidden">
-                <div class="section-title">
-                    <h2><i class="fas fa-boxes"></i> Gestão de Estoque</h2>
-                    <div>
-                        <button class="btn" id="btn-ajustar-estoque"><i class="fas fa-exchange-alt"></i> Ajustar Estoque</button>
-                        <button class="btn btn-secondary" id="btn-relatorio-estoque-pdf"><i class="fas fa-file-pdf"></i> Relatório PDF</button>
-                    </div>
-                </div>
-
-                <div id="form-ajuste-estoque" class="hidden mb-2">
-                    <h3 class="mb-1">Ajuste de Estoque</h3>
-                    <form id="ajuste-estoque-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ajuste-produto">Produto *</label>
-                                <select id="ajuste-produto" required>
-                                    <option value="">Selecione um produto</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="ajuste-tipo">Tipo de Ajuste *</label>
-                                <select id="ajuste-tipo" required>
-                                    <option value="">Selecione</option>
-                                    <option value="entrada">Entrada (Adicionar)</option>
-                                    <option value="saida">Saída (Remover)</option>
-                                    <option value="correcao">Correção (Alterar)</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ajuste-quantidade">Quantidade *</label>
-                                <input type="number" id="ajuste-quantidade" min="1" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="ajuste-motivo">Motivo *</label>
-                                <input type="text" id="ajuste-motivo" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <button type="submit" class="btn" id="btn-salvar-ajuste">Salvar Ajuste</button>
-                                <button type="button" class="btn btn-secondary" id="btn-cancelar-ajuste">Cancelar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="table-container">
-                    <table id="tabela-estoque">
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Categoria</th>
-                                <th>Tamanho</th>
-                                <th>Estoque Atual</th>
-                                <th>Valor Unitário</th>
-                                <th>Valor Total</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Estoque será inserido aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="section-title mt-2">
-                    <h3><i class="fas fa-history"></i> Histórico de Ajustes de Estoque</h3>
+                <div class="form-group">
+                    <label for="register-username">Nome de Usuário *</label>
+                    <input type="text" id="register-username" required>
                 </div>
                 
-                <div class="table-container">
-                    <table id="tabela-historico-estoque">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Produto</th>
-                                <th>Tipo</th>
-                                <th>Quantidade</th>
-                                <th>Motivo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Histórico será inserido aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Vendas -->
-            <section id="vendas-section" class="hidden">
-                <div class="section-title">
-                    <h2><i class="fas fa-shopping-cart"></i> Gestão de Vendas</h2>
-                    <button class="btn" id="btn-nova-venda"><i class="fas fa-plus"></i> Nova Venda</button>
-                </div>
-
-                <div id="form-venda" class="hidden mb-2">
-                    <h3 class="mb-1">Registrar Nova Venda</h3>
-                    <form id="venda-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="venda-cliente">Cliente</label>
-                                <select id="venda-cliente">
-                                    <option value="">Cliente não identificado</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="venda-data">Data da Venda</label>
-                                <input type="datetime-local" id="venda-data">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="venda-produto">Adicionar Produto</label>
-                                <select id="venda-produto">
-                                    <option value="">Selecione um produto</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="venda-quantidade">Quantidade</label>
-                                <input type="number" id="venda-quantidade" min="1" value="1">
-                            </div>
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <button type="button" class="btn" id="btn-adicionar-item">Adicionar Item</button>
-                            </div>
-                        </div>
-                        
-                        <div class="table-container mt-1">
-                            <table id="tabela-itens-venda">
-                                <thead>
-                                    <tr>
-                                        <th>Produto</th>
-                                        <th>Quantidade</th>
-                                        <th>Preço Unitário</th>
-                                        <th>Subtotal</th>
-                                        <th>Ação</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="itens-venda-corpo">
-                                    <!-- Itens da venda serão inseridos aqui -->
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3" class="text-center"><strong>Total da Venda</strong></td>
-                                        <td><strong id="venda-total">R$ 0,00</strong></td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        
-                        <div class="form-row mt-2">
-                            <div class="form-group">
-                                <label for="venda-forma-pagamento">Forma de Pagamento *</label>
-                                <select id="venda-forma-pagamento" required>
-                                    <option value="">Selecione</option>
-                                    <option value="Dinheiro">Dinheiro</option>
-                                    <option value="Cartão Débito">Cartão Débito</option>
-                                    <option value="Cartão Crédito">Cartão Crédito</option>
-                                    <option value="PIX">PIX</option>
-                                    <option value="Transferência">Transferência</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="venda-observacoes">Observações</label>
-                                <textarea id="venda-observacoes" rows="2"></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <button type="submit" class="btn" id="btn-finalizar-venda">Finalizar Venda</button>
-                                <button type="button" class="btn btn-secondary" id="btn-cancelar-venda">Cancelar Venda</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="table-container">
-                    <table id="tabela-vendas">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Cliente</th>
-                                <th>Produtos</th>
-                                <th>Valor Total</th>
-                                <th>Pagamento</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Vendas serão inseridas aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Relatórios -->
-            <section id="relatorios-section" class="hidden">
-                <div class="section-title">
-                    <h2><i class="fas fa-chart-bar"></i> Relatórios</h2>
-                    <div>
-                        <button class="btn" id="btn-gerar-relatorio"><i class="fas fa-sync-alt"></i> Atualizar Dados</button>
-                    </div>
-                </div>
-
-                <div class="dashboard-cards mb-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Vendas do Mês</h3>
-                            <i class="fas fa-chart-line card-icon"></i>
-                        </div>
-                        <div class="card-value" id="vendas-mes">R$ 0,00</div>
-                        <div class="card-footer">Total de vendas no mês atual</div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Lucro do Mês</h3>
-                            <i class="fas fa-money-bill-wave card-icon"></i>
-                        </div>
-                        <div class="card-value" id="lucro-mes">R$ 0,00</div>
-                        <div class="card-footer">Lucro líquido no mês atual</div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Produtos Mais Vendidos</h3>
-                            <i class="fas fa-star card-icon"></i>
-                        </div>
-                        <div class="card-value" id="produtos-vendidos">0</div>
-                        <div class="card-footer">Total de produtos vendidos no mês</div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Ticket Médio</h3>
-                            <i class="fas fa-receipt card-icon"></i>
-                        </div>
-                        <div class="card-value" id="ticket-medio">R$ 0,00</div>
-                        <div class="card-footer">Valor médio por venda</div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="relatorio-periodo">Período do Relatório</label>
-                        <select id="relatorio-periodo">
-                            <option value="hoje">Hoje</option>
-                            <option value="semana">Esta Semana</option>
-                            <option value="mes" selected>Este Mês</option>
-                            <option value="trimestre">Este Trimestre</option>
-                            <option value="ano">Este Ano</option>
-                            <option value="personalizado">Personalizado</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="relatorio-data-inicio-container" style="display: none;">
-                        <label for="relatorio-data-inicio">Data Início</label>
-                        <input type="date" id="relatorio-data-inicio">
-                    </div>
-                    <div class="form-group" id="relatorio-data-fim-container" style="display: none;">
-                        <label for="relatorio-data-fim">Data Fim</label>
-                        <input type="date" id="relatorio-data-fim">
-                    </div>
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button class="btn" id="btn-gerar-relatorio-financeiro-pdf"><i class="fas fa-file-pdf"></i> Relatório Financeiro PDF</button>
-                        <button class="btn btn-secondary" id="btn-gerar-relatorio-estoque-pdf"><i class="fas fa-file-pdf"></i> Relatório Estoque PDF</button>
-                    </div>
-                </div>
-
-                <div class="section-title mt-2">
-                    <h3><i class="fas fa-chart-pie"></i> Vendas por Categoria</h3>
+                <div class="form-group">
+                    <label for="register-email">E-mail *</label>
+                    <input type="email" id="register-email" required>
                 </div>
                 
-                <div class="table-container">
-                    <table id="tabela-vendas-categoria">
-                        <thead>
-                            <tr>
-                                <th>Categoria</th>
-                                <th>Quantidade Vendida</th>
-                                <th>Valor Total</th>
-                                <th>% do Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Vendas por categoria serão inseridas aqui via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="section-title mt-2">
-                    <h3><i class="fas fa-calendar-alt"></i> Vendas por Período</h3>
+                <div class="form-group">
+                    <label for="register-senha">Senha *</label>
+                    <input type="password" id="register-senha" required>
                 </div>
                 
-                <div class="table-container">
-                    <table id="tabela-vendas-periodo">
-                        <thead>
-                            <tr>
-                                <th>Período</th>
-                                <th>Quantidade de Vendas</th>
-                                <th>Valor Total</th>
-                                <th>Lucro</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Vendas por período serão inseridas aqui via JavaScript -->
-                        </tbody>
-                    </table>
+                <div class="form-group">
+                    <label for="register-confirmar-senha">Confirmar Senha *</label>
+                    <input type="password" id="register-confirmar-senha" required>
                 </div>
-            </section>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn w-100">Cadastrar e Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            <div id="mensagem" class="message"></div>
-        </main>
-
-        <footer>
-            <p>ElisBella - Moda Feminina &copy; <span id="ano-atual"></span></p>
-            <p>Desenvolvido por Alex Peixoto @Direitos Reservados</p>
-        </footer>
+    <!-- Recibo Térmico (oculto para impressão) -->
+    <div id="recibo-termico" class="thermal-receipt" style="display: none; position: absolute; left: -10000px;">
+        <div class="receipt-header">
+            <h2 id="recibo-loja-nome">ElisBella</h2>
+            <div id="recibo-loja-info">Moda Feminina</div>
+            <div id="recibo-data">Data: 00/00/0000 00:00</div>
+        </div>
+        
+        <div class="receipt-body">
+            <div id="recibo-cliente">Cliente: Não identificado</div>
+            <hr style="border-top: 1px dashed #000; margin: 10px 0;">
+            
+            <table class="receipt-items" id="recibo-itens">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Item</th>
+                        <th style="text-align: right;">Qtd</th>
+                        <th style="text-align: right;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="recibo-itens-corpo">
+                    <!-- Itens do recibo serão inseridos aqui -->
+                </tbody>
+            </table>
+            
+            <hr style="border-top: 1px dashed #000; margin: 10px 0;">
+            
+            <div class="receipt-total">
+                <div>Total: <span id="recibo-total">R$ 0,00</span></div>
+                <div id="recibo-pagamento">Pagamento: </div>
+                <div id="recibo-observacoes">Observações: </div>
+            </div>
+            
+            <hr style="border-top: 1px dashed #000; margin: 10px 0;">
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Obrigado pela preferência!</p>
+                <p>Volte sempre!</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Sistema de Gestão para Loja de Moda Feminina
-        // Dados iniciais para demonstração
-        let clientes = JSON.parse(localStorage.getItem('clientes')) || [
-            {id: 1, nome: "Maria Silva", cpf: "123.456.789-00", email: "maria@email.com", telefone: "(11) 99999-9999", endereco: "Rua das Flores, 123", dataNascimento: "1985-03-15", totalCompras: 3},
-            {id: 2, nome: "Ana Santos", cpf: "987.654.321-00", email: "ana@email.com", telefone: "(11) 98888-8888", endereco: "Av. Paulista, 1000", dataNascimento: "1990-07-22", totalCompras: 1},
-            {id: 3, nome: "Carla Oliveira", cpf: "456.789.123-00", email: "carla@email.com", telefone: "(11) 97777-7777", endereco: "Rua Augusta, 500", dataNascimento: "1995-11-30", totalCompras: 2}
-        ];
+        // Sistema de Gestão para Loja de Moda Feminina - ElisBella
+        // Sistema completo com todas as funcionalidades solicitadas
 
-        let produtos = JSON.parse(localStorage.getItem('produtos')) || [
-            {id: 1, nome: "Vestido Floral Midi", categoria: "Vestidos", tamanho: "M", cor: "Estampado", precoCusto: 45.00, precoVenda: 129.90, quantidade: 10, descricao: "Vestido floral com corte midi"},
-            {id: 2, nome: "Blusa de Seda", categoria: "Blusas", tamanho: "P", cor: "Branco", precoCusto: 35.00, precoVenda: 89.90, quantidade: 15, descricao: "Blusa de seda pura"},
-            {id: 3, nome: "Calça Jeans Skinny", categoria: "Calças", tamanho: "G", cor: "Azul", precoCusto: 55.00, precoVenda: 149.90, quantidade: 8, descricao: "Calça jeans modelo skinny"},
-            {id: 4, nome: "Saia Plissada", categoria: "Saias", tamanho: "M", cor: "Preto", precoCusto: 30.00, precoVenda: 79.90, quantidade: 12, descricao: "Saia plissada midi"},
-            {id: 5, nome: "Casaco de Lã", categoria: "Casacos", tamanho: "GG", cor: "Cinza", precoCusto: 65.00, precoVenda: 179.90, quantidade: 5, descricao: "Casaco de lã para inverno"},
-            {id: 6, nome: "Kit Calcinhas", categoria: "Roupas Íntimas", tamanho: "M", cor: "Rosa", precoCusto: 15.00, precoVenda: 49.90, quantidade: 20, descricao: "Kit com 3 calcinhas de algodão"}
-        ];
-
-        let vendas = JSON.parse(localStorage.getItem('vendas')) || [
-            {id: 1, clienteId: 1, data: "2023-10-20T14:30:00", produtos: [{produtoId: 1, quantidade: 1, precoUnitario: 129.90}, {produtoId: 6, quantidade: 2, precoUnitario: 49.90}], formaPagamento: "Cartão Crédito", observacoes: "Cliente preferiu não levar sacola", total: 229.70},
-            {id: 2, clienteId: 2, data: "2023-10-19T10:15:00", produtos: [{produtoId: 2, quantidade: 1, precoUnitario: 89.90}], formaPagamento: "PIX", observacoes: "", total: 89.90},
-            {id: 3, clienteId: 3, data: "2023-10-18T16:45:00", produtos: [{produtoId: 3, quantidade: 1, precoUnitario: 149.90}, {produtoId: 4, quantidade: 1, precoUnitario: 79.90}], formaPagamento: "Dinheiro", observacoes: "Pagou com dinheiro trocado", total: 229.80}
-        ];
-
-        let historicoEstoque = JSON.parse(localStorage.getItem('historicoEstoque')) || [
-            {id: 1, produtoId: 1, tipo: "entrada", quantidade: 10, motivo: "Compra inicial", data: "2023-10-01T09:00:00"},
-            {id: 2, produtoId: 2, tipo: "entrada", quantidade: 15, motivo: "Compra inicial", data: "2023-10-01T09:00:00"},
-            {id: 3, produtoId: 1, tipo: "saida", quantidade: 1, motivo: "Venda", data: "2023-10-20T14:30:00"},
-            {id: 4, produtoId: 6, tipo: "saida", quantidade: 2, motivo: "Venda", data: "2023-10-20T14:30:00"}
-        ];
+        // Dados iniciais vazios
+        let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+        let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        let produtos = JSON.parse(localStorage.getItem('produtos')) || [];
+        let vendas = JSON.parse(localStorage.getItem('vendas')) || [];
+        let historicoEstoque = JSON.parse(localStorage.getItem('historicoEstoque')) || [];
+        let configuracoes = JSON.parse(localStorage.getItem('configuracoes')) || {
+            nomeLoja: "ElisBella",
+            telefone: "",
+            email: "",
+            endereco: "",
+            cidade: "",
+            cnpj: "",
+            inatividade: 1,
+            backupWarning: "sim"
+        };
 
         // Variáveis globais
         let proximoIdCliente = clientes.length > 0 ? Math.max(...clientes.map(c => c.id)) + 1 : 1;
         let proximoIdProduto = produtos.length > 0 ? Math.max(...produtos.map(p => p.id)) + 1 : 1;
         let proximoIdVenda = vendas.length > 0 ? Math.max(...vendas.map(v => v.id)) + 1 : 1;
         let proximoIdHistorico = historicoEstoque.length > 0 ? Math.max(...historicoEstoque.map(h => h.id)) + 1 : 1;
+        let proximoIdUsuario = usuarios.length > 0 ? Math.max(...usuarios.map(u => u.id)) + 1 : 1;
 
         // Estado atual do sistema
+        let usuarioLogado = null;
         let itensVendaAtual = [];
         let modoEdicaoCliente = false;
         let modoEdicaoProduto = false;
+        let modoEdicaoUsuario = false;
+        
+        // Controle de inatividade
+        let inactivityTimer;
+        let inactivityCounter = 60;
+        let inactivityLimit = configuracoes.inatividade * 60; // Convertendo minutos para segundos
 
         // Inicialização do sistema
         document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se há usuários cadastrados
+            if (usuarios.length === 0) {
+                // Mostrar modal de cadastro do primeiro usuário
+                document.getElementById('register-modal').classList.add('active');
+            } else {
+                // Mostrar tela de login
+                mostrarTelaLogin();
+            }
+            
             // Configurar data atual
             const dataAtual = new Date();
             document.getElementById('data-atual').textContent = dataAtual.toLocaleDateString('pt-BR');
             document.getElementById('ano-atual').textContent = dataAtual.getFullYear();
             
-            // Configurar navegação
+            // Configurar eventos
+            configurarEventos();
+            
+            // Aplicar configurações
+            aplicarConfiguracoes();
+        });
+
+        // Configurar todos os eventos do sistema
+        function configurarEventos() {
+            // Eventos de login
+            document.getElementById('login-form').addEventListener('submit', fazerLogin);
+            document.getElementById('register-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('register-modal').classList.add('active');
+            });
+            
+            // Eventos de registro
+            document.getElementById('register-form').addEventListener('submit', registrarPrimeiroUsuario);
+            
+            // Eventos de navegação
             configurarNavegacao();
             
-            // Carregar dados iniciais
-            carregarDashboard();
-            carregarClientes();
-            carregarProdutos();
-            carregarEstoque();
-            carregarVendas();
-            carregarRelatorios();
-            
-            // Configurar eventos dos formulários
+            // Eventos de formulários
             configurarEventosFormularios();
             
-            // Configurar eventos dos botões
+            // Eventos de botões
             configurarEventosBotoes();
             
-            // Configurar eventos dos relatórios
+            // Eventos de relatórios
             configurarEventosRelatorios();
             
-            // Salvar dados iniciais no localStorage
-            salvarDados();
-        });
+            // Eventos de backup
+            configurarEventosBackup();
+            
+            // Eventos de usuário
+            document.getElementById('user-menu-toggle').addEventListener('click', function() {
+                document.getElementById('user-menu').classList.toggle('active');
+            });
+            
+            document.getElementById('logout-btn').addEventListener('click', fazerLogout);
+            
+            // Eventos de inatividade
+            document.getElementById('btn-reiniciar-sessao').addEventListener('click', reiniciarSessao);
+            
+            // Eventos de backup ao sair
+            document.getElementById('btn-backup-rapido').addEventListener('click', fazerBackupRapido);
+            document.getElementById('btn-ignorar-backup').addEventListener('click', function() {
+                document.getElementById('backup-warning').classList.remove('active');
+            });
+            
+            // Fechar modal de backup ao clicar fora
+            document.getElementById('backup-modal-close').addEventListener('click', function() {
+                document.getElementById('backup-modal').classList.remove('active');
+            });
+            
+            // Detectar atividade do usuário
+            document.addEventListener('click', resetInactivityTimer);
+            document.addEventListener('keypress', resetInactivityTimer);
+            document.addEventListener('mousemove', resetInactivityTimer);
+            document.addEventListener('scroll', resetInactivityTimer);
+            
+            // Aviso de backup ao sair
+            window.addEventListener('beforeunload', function(e) {
+                if (usuarioLogado && configuracoes.backupWarning === "sim") {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    
+                    // Mostrar aviso de backup
+                    document.getElementById('backup-warning').classList.add('active');
+                    
+                    // Não permitir sair imediatamente
+                    return "Certifique-se de fazer backup dos seus dados antes de sair.";
+                }
+            });
+        }
 
         // Configurar navegação entre seções
         function configurarNavegacao() {
-            const navLinks = document.querySelectorAll('.nav-link');
+            const navLinks = document.querySelectorAll('.nav-link, .user-menu-item[data-section]');
             const sections = document.querySelectorAll('section[id$="section"]');
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    // Remover classe active de todos os links
-                    navLinks.forEach(l => l.classList.remove('active'));
+                    // Fechar menu do usuário se aberto
+                    document.getElementById('user-menu').classList.remove('active');
                     
-                    // Adicionar classe active ao link clicado
-                    this.classList.add('active');
+                    // Remover classe active de todos os links do menu principal
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    
+                    // Adicionar classe active ao link clicado (apenas se for do menu principal)
+                    if (this.classList.contains('nav-link')) {
+                        this.classList.add('active');
+                    }
                     
                     // Esconder todas as seções
                     sections.forEach(section => section.classList.add('hidden'));
                     
                     // Mostrar a seção correspondente
                     const sectionId = this.getAttribute('data-section') + '-section';
-                    document.getElementById(sectionId).classList.remove('hidden');
+                    const sectionElement = document.getElementById(sectionId);
                     
-                    // Atualizar dados da seção
-                    switch(this.getAttribute('data-section')) {
-                        case 'dashboard':
-                            carregarDashboard();
-                            break;
-                        case 'clientes':
-                            carregarClientes();
-                            break;
-                        case 'produtos':
-                            carregarProdutos();
-                            break;
-                        case 'estoque':
-                            carregarEstoque();
-                            break;
-                        case 'vendas':
-                            carregarVendas();
-                            break;
-                        case 'relatorios':
-                            carregarRelatorios();
-                            break;
+                    if (sectionElement) {
+                        sectionElement.classList.remove('hidden');
+                        
+                        // Atualizar dados da seção
+                        switch(this.getAttribute('data-section')) {
+                            case 'moda-feminina':
+                                carregarDashboard();
+                                break;
+                            case 'clientes':
+                                carregarClientes();
+                                break;
+                            case 'produtos':
+                                carregarProdutos();
+                                break;
+                            case 'estoque':
+                                carregarEstoque();
+                                break;
+                            case 'vendas':
+                                carregarVendas();
+                                break;
+                            case 'relatorios':
+                                carregarRelatorios();
+                                break;
+                            case 'configuracoes':
+                                carregarConfiguracoes();
+                                break;
+                            case 'usuarios':
+                                carregarUsuarios();
+                                break;
+                        }
                     }
                 });
             });
@@ -1142,6 +1998,18 @@
                 e.preventDefault();
                 finalizarVenda();
             });
+            
+            // Formulário de configurações
+            document.getElementById('configuracoes-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                salvarConfiguracoes();
+            });
+            
+            // Formulário de usuário
+            document.getElementById('usuario-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                salvarUsuario();
+            });
         }
 
         // Configurar eventos dos botões
@@ -1163,9 +2031,20 @@
             document.getElementById('btn-nova-venda').addEventListener('click', mostrarFormVenda);
             document.getElementById('btn-cancelar-venda').addEventListener('click', cancelarFormVenda);
             document.getElementById('btn-adicionar-item').addEventListener('click', adicionarItemVenda);
+            document.getElementById('btn-imprimir-recibo').addEventListener('click', gerarReciboPDF);
             
             // Botões de relatório
             document.getElementById('btn-gerar-relatorio').addEventListener('click', carregarRelatorios);
+            
+            // Botões de usuário
+            document.getElementById('btn-novo-usuario').addEventListener('click', mostrarFormUsuario);
+            document.getElementById('btn-cancelar-usuario').addEventListener('click', cancelarFormUsuario);
+            
+            // Botões de backup
+            document.getElementById('backup-menu').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('backup-modal').classList.add('active');
+            });
         }
 
         // Configurar eventos dos relatórios
@@ -1190,7 +2069,185 @@
             document.getElementById('btn-gerar-relatorio-estoque-pdf').addEventListener('click', gerarRelatorioEstoquePDF);
         }
 
-        // Funções para Dashboard
+        // Configurar eventos de backup
+        function configurarEventosBackup() {
+            document.getElementById('btn-exportar-backup').addEventListener('click', exportarBackup);
+            document.getElementById('btn-importar-backup').addEventListener('click', importarBackup);
+            document.getElementById('btn-limpar-dados').addEventListener('click', limparDados);
+        }
+
+        // Funções de Autenticação
+        function mostrarTelaLogin() {
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('main-system').style.display = 'none';
+            document.getElementById('register-modal').classList.remove('active');
+        }
+
+        function mostrarSistemaPrincipal() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-system').style.display = 'block';
+            
+            // Atualizar interface com dados do usuário
+            document.getElementById('current-user').textContent = usuarioLogado.nome;
+            document.getElementById('store-name').textContent = configuracoes.nomeLoja;
+            document.getElementById('footer-store-name').innerHTML = `${configuracoes.nomeLoja} - Moda Feminina &copy; <span id="ano-atual">${new Date().getFullYear()}</span>`;
+            
+            // Carregar dados iniciais
+            carregarDashboard();
+            carregarClientes();
+            carregarProdutos();
+            carregarEstoque();
+            carregarVendas();
+            carregarRelatorios();
+            
+            // Iniciar timer de inatividade
+            iniciarInatividadeTimer();
+        }
+
+        function fazerLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            // Validar campos
+            if (!username || !password) {
+                mostrarMensagemLogin('Preencha todos os campos.', 'error');
+                return;
+            }
+            
+            // Verificar credenciais
+            const usuario = usuarios.find(u => u.username === username && u.senha === password && u.ativo);
+            
+            if (!usuario) {
+                mostrarMensagemLogin('Usuário ou senha inválidos.', 'error');
+                return;
+            }
+            
+            // Login bem sucedido
+            usuarioLogado = usuario;
+            mostrarMensagemLogin('Login realizado com sucesso!', 'success');
+            
+            // Limpar formulário
+            document.getElementById('login-form').reset();
+            
+            // Mostrar sistema principal após breve delay
+            setTimeout(() => {
+                mostrarSistemaPrincipal();
+            }, 500);
+        }
+
+        function fazerLogout() {
+            usuarioLogado = null;
+            mostrarTelaLogin();
+            pararInatividadeTimer();
+            mostrarMensagem('Você saiu do sistema.', 'info');
+        }
+
+        function registrarPrimeiroUsuario(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('register-nome').value.trim();
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const senha = document.getElementById('register-senha').value;
+            const confirmarSenha = document.getElementById('register-confirmar-senha').value;
+            
+            // Validar campos
+            if (!nome || !username || !email || !senha || !confirmarSenha) {
+                mostrarMensagemRegistro('Preencha todos os campos.', 'error');
+                return;
+            }
+            
+            if (senha !== confirmarSenha) {
+                mostrarMensagemRegistro('As senhas não coincidem.', 'error');
+                return;
+            }
+            
+            // Verificar se o usuário já existe
+            if (usuarios.some(u => u.username === username)) {
+                mostrarMensagemRegistro('Este nome de usuário já está em uso.', 'error');
+                return;
+            }
+            
+            // Criar primeiro usuário (admin)
+            const novoUsuario = {
+                id: 1,
+                nome,
+                username,
+                email,
+                senha,
+                perfil: 'admin',
+                ativo: true,
+                dataCriacao: new Date().toISOString()
+            };
+            
+            usuarios.push(novoUsuario);
+            salvarDados();
+            
+            // Fazer login automaticamente
+            usuarioLogado = novoUsuario;
+            
+            // Fechar modal e mostrar sistema
+            document.getElementById('register-modal').classList.remove('active');
+            mostrarSistemaPrincipal();
+            
+            mostrarMensagem('Primeiro usuário cadastrado com sucesso!', 'success');
+        }
+
+        // Funções de Inatividade
+        function iniciarInatividadeTimer() {
+            inactivityLimit = configuracoes.inatividade * 60;
+            inactivityCounter = inactivityLimit;
+            pararInatividadeTimer();
+            
+            inactivityTimer = setInterval(() => {
+                inactivityCounter--;
+                
+                if (inactivityCounter <= 0) {
+                    pararInatividadeTimer();
+                    mostrarTelaInatividade();
+                }
+            }, 1000);
+        }
+
+        function resetInactivityTimer() {
+            if (usuarioLogado) {
+                inactivityCounter = inactivityLimit;
+            }
+        }
+
+        function pararInatividadeTimer() {
+            if (inactivityTimer) {
+                clearInterval(inactivityTimer);
+                inactivityTimer = null;
+            }
+        }
+
+        function mostrarTelaInatividade() {
+            document.getElementById('inactivity-overlay').classList.add('active');
+            
+            // Iniciar contagem regressiva para logout automático
+            let countdown = 10;
+            document.getElementById('inactivity-timer').textContent = countdown;
+            
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById('inactivity-timer').textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    fazerLogout();
+                }
+            }, 1000);
+        }
+
+        function reiniciarSessao() {
+            document.getElementById('inactivity-overlay').classList.remove('active');
+            resetInactivityTimer();
+        }
+
+        // Funções para Dashboard (Moda Feminina)
         function carregarDashboard() {
             // Calcular vendas de hoje
             const hoje = new Date().toISOString().split('T')[0];
@@ -1215,6 +2272,13 @@
         function carregarVendasRecentes() {
             const tbody = document.querySelector('#tabela-vendas-recentes tbody');
             tbody.innerHTML = '';
+            
+            if (vendas.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="4" class="text-center">Nenhuma venda registrada ainda.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
             
             // Ordenar vendas por data (mais recentes primeiro)
             const vendasOrdenadas = [...vendas].sort((a, b) => new Date(b.data) - new Date(a.data));
@@ -1245,6 +2309,13 @@
         function carregarClientes() {
             const tbody = document.querySelector('#tabela-clientes tbody');
             tbody.innerHTML = '';
+            
+            if (clientes.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="text-center">Nenhum cliente cadastrado ainda.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
             
             clientes.forEach(cliente => {
                 const row = document.createElement('tr');
@@ -1409,6 +2480,13 @@
         function carregarProdutos() {
             const tbody = document.querySelector('#tabela-produtos tbody');
             tbody.innerHTML = '';
+            
+            if (produtos.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" class="text-center">Nenhum produto cadastrado ainda.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
             
             produtos.forEach(produto => {
                 const row = document.createElement('tr');
@@ -1592,10 +2670,27 @@
             const tbody = document.querySelector('#tabela-estoque tbody');
             tbody.innerHTML = '';
             
+            if (produtos.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="7" class="text-center">Nenhum produto em estoque.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+            
             produtos.forEach(produto => {
                 const valorTotal = produto.precoCusto * produto.quantidade;
-                const status = produto.quantidade === 0 ? 'ESGOTADO' : 
-                              produto.quantidade < 5 ? 'BAIXO' : 'OK';
+                let status, statusClass;
+                
+                if (produto.quantidade === 0) {
+                    status = 'ESGOTADO';
+                    statusClass = 'status-out';
+                } else if (produto.quantidade < 5) {
+                    status = 'BAIXO';
+                    statusClass = 'status-low';
+                } else {
+                    status = 'OK';
+                    statusClass = 'status-ok';
+                }
                 
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -1605,7 +2700,7 @@
                     <td>${produto.quantidade}</td>
                     <td>${formatarMoeda(produto.precoCusto)}</td>
                     <td>${formatarMoeda(valorTotal)}</td>
-                    <td><span class="${status.toLowerCase()}">${status}</span></td>
+                    <td><span class="${statusClass}">${status}</span></td>
                 `;
                 tbody.appendChild(row);
             });
@@ -1621,10 +2716,20 @@
             const tbody = document.querySelector('#tabela-historico-estoque tbody');
             tbody.innerHTML = '';
             
+            if (historicoEstoque.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="text-center">Nenhum ajuste de estoque registrado.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+            
             // Ordenar histórico por data (mais recente primeiro)
             const historicoOrdenado = [...historicoEstoque].sort((a, b) => new Date(b.data) - new Date(a.data));
             
-            historicoOrdenado.forEach(ajuste => {
+            // Limitar a 20 registros
+            const historicoLimitado = historicoOrdenado.slice(0, 20);
+            
+            historicoLimitado.forEach(ajuste => {
                 const produto = produtos.find(p => p.id === ajuste.produtoId);
                 const nomeProduto = produto ? produto.nome : 'Produto não encontrado';
                 const tipoTexto = ajuste.tipo === 'entrada' ? 'Entrada' : 
@@ -1741,6 +2846,13 @@
         function carregarVendas() {
             const tbody = document.querySelector('#tabela-vendas tbody');
             tbody.innerHTML = '';
+            
+            if (vendas.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" class="text-center">Nenhuma venda registrada ainda.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
             
             // Ordenar vendas por data (mais recentes primeiro)
             const vendasOrdenadas = [...vendas].sort((a, b) => new Date(b.data) - new Date(a.data));
@@ -1989,6 +3101,9 @@
             // Salvar dados
             salvarDados();
             
+            // Gerar recibo
+            gerarReciboPDF(novaVenda);
+            
             mostrarMensagem(`Venda finalizada com sucesso! Total: ${formatarMoeda(total)}`, 'success');
         }
         
@@ -2225,6 +3340,13 @@
                 `;
                 tbody.appendChild(row);
             }
+            
+            // Se não houver dados
+            if (Object.keys(vendasPorCategoria).length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="4" class="text-center">Nenhuma venda no período selecionado.</td>`;
+                tbody.appendChild(row);
+            }
         }
         
         function carregarVendasPorPeriodo(dataInicio, dataFim) {
@@ -2310,6 +3432,13 @@
                 `;
                 tbody.appendChild(row);
             }
+            
+            // Se não houver dados
+            if (Object.keys(vendasAgrupadas).length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="4" class="text-center">Nenhuma venda no período selecionado.</td>`;
+                tbody.appendChild(row);
+            }
         }
         
         function gerarRelatorioFinanceiroPDF() {
@@ -2324,7 +3453,7 @@
             // Cabeçalho
             doc.setFontSize(20);
             doc.setTextColor(173, 20, 87); // Rosa escuro
-            doc.text('Relatório Financeiro - ElisBella', pageWidth / 2, yPos, { align: 'center' });
+            doc.text('Relatório Financeiro - ' + configuracoes.nomeLoja, pageWidth / 2, yPos, { align: 'center' });
             yPos += 10;
             
             doc.setFontSize(12);
@@ -2388,24 +3517,31 @@
             
             tabelaCategoria.forEach(linha => {
                 const colunas = linha.querySelectorAll('td');
-                dadosCategoria.push([
-                    colunas[0].textContent,
-                    colunas[1].textContent,
-                    colunas[2].textContent,
-                    colunas[3].textContent
-                ]);
+                if (colunas.length === 4) {
+                    dadosCategoria.push([
+                        colunas[0].textContent,
+                        colunas[1].textContent,
+                        colunas[2].textContent,
+                        colunas[3].textContent
+                    ]);
+                }
             });
             
-            doc.autoTable({
-                startY: yPos,
-                head: [dadosCategoria[0]],
-                body: dadosCategoria.slice(1),
-                theme: 'striped',
-                headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
-                margin: { left: margin, right: margin }
-            });
-            
-            yPos = doc.lastAutoTable.finalY + 10;
+            if (dadosCategoria.length > 1) {
+                doc.autoTable({
+                    startY: yPos,
+                    head: [dadosCategoria[0]],
+                    body: dadosCategoria.slice(1),
+                    theme: 'striped',
+                    headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
+                    margin: { left: margin, right: margin }
+                });
+                
+                yPos = doc.lastAutoTable.finalY + 10;
+            } else {
+                doc.text('Nenhuma venda por categoria no período.', margin, yPos);
+                yPos += 10;
+            }
             
             // Verificar se há espaço para a próxima tabela, caso contrário, adicionar nova página
             if (yPos > doc.internal.pageSize.height - 50) {
@@ -2427,22 +3563,28 @@
             
             tabelaPeriodo.forEach(linha => {
                 const colunas = linha.querySelectorAll('td');
-                dadosPeriodo.push([
-                    colunas[0].textContent,
-                    colunas[1].textContent,
-                    colunas[2].textContent,
-                    colunas[3].textContent
-                ]);
+                if (colunas.length === 4) {
+                    dadosPeriodo.push([
+                        colunas[0].textContent,
+                        colunas[1].textContent,
+                        colunas[2].textContent,
+                        colunas[3].textContent
+                    ]);
+                }
             });
             
-            doc.autoTable({
-                startY: yPos,
-                head: [dadosPeriodo[0]],
-                body: dadosPeriodo.slice(1),
-                theme: 'striped',
-                headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
-                margin: { left: margin, right: margin }
-            });
+            if (dadosPeriodo.length > 1) {
+                doc.autoTable({
+                    startY: yPos,
+                    head: [dadosPeriodo[0]],
+                    body: dadosPeriodo.slice(1),
+                    theme: 'striped',
+                    headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
+                    margin: { left: margin, right: margin }
+                });
+            } else {
+                doc.text('Nenhuma venda por período.', margin, yPos);
+            }
             
             // Rodapé
             const totalPages = doc.internal.getNumberOfPages();
@@ -2454,7 +3596,7 @@
             }
             
             // Salvar o PDF
-            const nomeArquivo = `Relatorio_Financeiro_VivaBella_${new Date().toISOString().slice(0, 10)}.pdf`;
+            const nomeArquivo = `Relatorio_Financeiro_${configuracoes.nomeLoja.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.pdf`;
             doc.save(nomeArquivo);
             
             mostrarMensagem('Relatório financeiro gerado com sucesso!', 'success');
@@ -2472,7 +3614,7 @@
             // Cabeçalho
             doc.setFontSize(20);
             doc.setTextColor(173, 20, 87); // Rosa escuro
-            doc.text('Relatório de Estoque - ElisBella', pageWidth / 2, yPos, { align: 'center' });
+            doc.text('Relatório de Estoque - ' + configuracoes.nomeLoja, pageWidth / 2, yPos, { align: 'center' });
             yPos += 10;
             
             doc.setFontSize(12);
@@ -2525,7 +3667,7 @@
                               produto.quantidade < 5 ? 'BAIXO' : 'OK';
                 
                 dadosEstoque.push([
-                    produto.nome,
+                    produto.nome.length > 20 ? produto.nome.substring(0, 20) + '...' : produto.nome,
                     produto.categoria,
                     produto.tamanho || '-',
                     produto.quantidade.toString(),
@@ -2535,22 +3677,27 @@
                 ]);
             });
             
-            doc.autoTable({
-                startY: yPos,
-                head: [dadosEstoque[0]],
-                body: dadosEstoque.slice(1),
-                theme: 'striped',
-                headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
-                margin: { left: margin, right: margin },
-                columnStyles: {
-                    3: { halign: 'center' },
-                    4: { halign: 'right' },
-                    5: { halign: 'right' },
-                    6: { halign: 'center' }
-                }
-            });
-            
-            yPos = doc.lastAutoTable.finalY + 10;
+            if (dadosEstoque.length > 1) {
+                doc.autoTable({
+                    startY: yPos,
+                    head: [dadosEstoque[0]],
+                    body: dadosEstoque.slice(1),
+                    theme: 'striped',
+                    headStyles: { fillColor: [244, 143, 177] }, // Rosa principal
+                    margin: { left: margin, right: margin },
+                    columnStyles: {
+                        3: { halign: 'center' },
+                        4: { halign: 'right' },
+                        5: { halign: 'right' },
+                        6: { halign: 'center' }
+                    }
+                });
+                
+                yPos = doc.lastAutoTable.finalY + 10;
+            } else {
+                doc.text('Nenhum produto em estoque.', margin, yPos);
+                yPos += 10;
+            }
             
             // Verificar se há espaço para a próxima tabela, caso contrário, adicionar nova página
             if (yPos > doc.internal.pageSize.height - 50) {
@@ -2573,7 +3720,7 @@
                 produtosProblema.forEach(produto => {
                     const status = produto.quantidade === 0 ? 'ESGOTADO' : 'BAIXO';
                     dadosProblema.push([
-                        produto.nome,
+                        produto.nome.length > 25 ? produto.nome.substring(0, 25) + '...' : produto.nome,
                         produto.categoria,
                         produto.quantidade.toString(),
                         status
@@ -2604,10 +3751,594 @@
             }
             
             // Salvar o PDF
-            const nomeArquivo = `Relatorio_Estoque_VivaBella_${new Date().toISOString().slice(0, 10)}.pdf`;
+            const nomeArquivo = `Relatorio_Estoque_${configuracoes.nomeLoja.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.pdf`;
             doc.save(nomeArquivo);
             
             mostrarMensagem('Relatório de estoque gerado com sucesso!', 'success');
+        }
+
+        // Funções para Configurações
+        function carregarConfiguracoes() {
+            document.getElementById('config-nome-loja').value = configuracoes.nomeLoja || '';
+            document.getElementById('config-cnpj').value = configuracoes.cnpj || '';
+            document.getElementById('config-telefone').value = configuracoes.telefone || '';
+            document.getElementById('config-email').value = configuracoes.email || '';
+            document.getElementById('config-endereco').value = configuracoes.endereco || '';
+            document.getElementById('config-cidade').value = configuracoes.cidade || '';
+            document.getElementById('config-inatividade').value = configuracoes.inatividade || 1;
+            document.getElementById('config-backup-warning').value = configuracoes.backupWarning || 'sim';
+        }
+        
+        function salvarConfiguracoes() {
+            configuracoes.nomeLoja = document.getElementById('config-nome-loja').value.trim() || 'ElisBella';
+            configuracoes.cnpj = document.getElementById('config-cnpj').value.trim();
+            configuracoes.telefone = document.getElementById('config-telefone').value.trim();
+            configuracoes.email = document.getElementById('config-email').value.trim();
+            configuracoes.endereco = document.getElementById('config-endereco').value.trim();
+            configuracoes.cidade = document.getElementById('config-cidade').value.trim();
+            configuracoes.inatividade = parseInt(document.getElementById('config-inatividade').value) || 1;
+            configuracoes.backupWarning = document.getElementById('config-backup-warning').value;
+            
+            // Atualizar interface
+            aplicarConfiguracoes();
+            
+            // Salvar dados
+            salvarDados();
+            
+            // Reiniciar timer de inatividade com novo valor
+            if (usuarioLogado) {
+                iniciarInatividadeTimer();
+            }
+            
+            mostrarMensagem('Configurações salvas com sucesso!', 'success');
+        }
+        
+        function aplicarConfiguracoes() {
+            // Aplicar nome da loja na interface
+            document.getElementById('store-name').textContent = configuracoes.nomeLoja;
+            document.getElementById('footer-store-name').innerHTML = `${configuracoes.nomeLoja} - Moda Feminina &copy; <span id="ano-atual">${new Date().getFullYear()}</span>`;
+            
+            // Aplicar limite de inatividade
+            inactivityLimit = configuracoes.inatividade * 60;
+        }
+
+        // Funções para Usuários
+        function carregarUsuarios() {
+            // Verificar se o usuário logado é admin
+            if (usuarioLogado.perfil !== 'admin') {
+                mostrarMensagem('Apenas administradores podem gerenciar usuários.', 'error');
+                // Redirecionar para dashboard
+                document.querySelector('.nav-link[data-section="moda-feminina"]').click();
+                return;
+            }
+            
+            const tbody = document.querySelector('#tabela-usuarios tbody');
+            tbody.innerHTML = '';
+            
+            if (usuarios.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" class="text-center">Nenhum usuário cadastrado.</td>`;
+                tbody.appendChild(row);
+                return;
+            }
+            
+            usuarios.forEach(usuario => {
+                const status = usuario.ativo ? 'Ativo' : 'Inativo';
+                const statusClass = usuario.ativo ? 'status-ok' : 'status-out';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${usuario.nome}</td>
+                    <td>${usuario.username}</td>
+                    <td>${usuario.email || '-'}</td>
+                    <td>${usuario.perfil}</td>
+                    <td><span class="${statusClass}">${status}</span></td>
+                    <td class="actions">
+                        <button class="btn btn-small editar-usuario" data-id="${usuario.id}">Editar</button>
+                        <button class="btn btn-small ${usuario.ativo ? 'btn-danger' : 'btn-success'} toggle-usuario" data-id="${usuario.id}">
+                            ${usuario.ativo ? 'Desativar' : 'Ativar'}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Adicionar eventos aos botões
+            document.querySelectorAll('.editar-usuario').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    editarUsuario(parseInt(this.getAttribute('data-id')));
+                });
+            });
+            
+            document.querySelectorAll('.toggle-usuario').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleUsuario(parseInt(this.getAttribute('data-id')));
+                });
+            });
+        }
+        
+        function mostrarFormUsuario() {
+            document.getElementById('form-usuario').classList.remove('hidden');
+            document.getElementById('form-usuario-titulo').textContent = 'Cadastrar Novo Usuário';
+            document.getElementById('usuario-id').value = '';
+            document.getElementById('usuario-form').reset();
+            modoEdicaoUsuario = false;
+            
+            // Rolar para o formulário
+            document.getElementById('form-usuario').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function cancelarFormUsuario() {
+            document.getElementById('form-usuario').classList.add('hidden');
+            document.getElementById('usuario-form').reset();
+        }
+        
+        function editarUsuario(id) {
+            const usuario = usuarios.find(u => u.id === id);
+            if (!usuario) return;
+            
+            document.getElementById('form-usuario').classList.remove('hidden');
+            document.getElementById('form-usuario-titulo').textContent = 'Editar Usuário';
+            
+            document.getElementById('usuario-id').value = usuario.id;
+            document.getElementById('usuario-nome').value = usuario.nome;
+            document.getElementById('usuario-username').value = usuario.username;
+            document.getElementById('usuario-email').value = usuario.email || '';
+            document.getElementById('usuario-perfil').value = usuario.perfil;
+            document.getElementById('usuario-senha').value = '';
+            document.getElementById('usuario-confirmar-senha').value = '';
+            
+            modoEdicaoUsuario = true;
+            
+            // Rolar para o formulário
+            document.getElementById('form-usuario').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function salvarUsuario() {
+            const id = document.getElementById('usuario-id').value;
+            const nome = document.getElementById('usuario-nome').value.trim();
+            const username = document.getElementById('usuario-username').value.trim();
+            const email = document.getElementById('usuario-email').value.trim();
+            const perfil = document.getElementById('usuario-perfil').value;
+            const senha = document.getElementById('usuario-senha').value;
+            const confirmarSenha = document.getElementById('usuario-confirmar-senha').value;
+            
+            if (!nome || !username || !perfil) {
+                mostrarMensagem('Por favor, preencha todos os campos obrigatórios.', 'error');
+                return;
+            }
+            
+            // Verificar se é um novo usuário ou se a senha está sendo alterada
+            if ((!id && !senha) || (id && senha && senha !== confirmarSenha)) {
+                mostrarMensagem('As senhas não coincidem.', 'error');
+                return;
+            }
+            
+            let novoUsuario;
+            
+            if (modoEdicaoUsuario && id) {
+                // Atualizar usuário existente
+                const index = usuarios.findIndex(u => u.id === parseInt(id));
+                if (index !== -1) {
+                    const usuarioAtual = usuarios[index];
+                    novoUsuario = {
+                        ...usuarioAtual,
+                        nome,
+                        username,
+                        email,
+                        perfil
+                    };
+                    
+                    // Atualizar senha se fornecida
+                    if (senha) {
+                        novoUsuario.senha = senha;
+                    }
+                    
+                    usuarios[index] = novoUsuario;
+                }
+                mostrarMensagem('Usuário atualizado com sucesso!', 'success');
+            } else {
+                // Verificar se o usuário já existe
+                if (usuarios.some(u => u.username === username)) {
+                    mostrarMensagem('Este nome de usuário já está em uso.', 'error');
+                    return;
+                }
+                
+                // Criar novo usuário
+                novoUsuario = {
+                    id: proximoIdUsuario++,
+                    nome,
+                    username,
+                    email,
+                    senha,
+                    perfil,
+                    ativo: true,
+                    dataCriacao: new Date().toISOString()
+                };
+                usuarios.push(novoUsuario);
+                mostrarMensagem('Usuário cadastrado com sucesso!', 'success');
+            }
+            
+            // Atualizar a tabela
+            carregarUsuarios();
+            
+            // Esconder o formulário
+            document.getElementById('form-usuario').classList.add('hidden');
+            document.getElementById('usuario-form').reset();
+            
+            // Salvar dados
+            salvarDados();
+        }
+        
+        function toggleUsuario(id) {
+            if (id === usuarioLogado.id) {
+                mostrarMensagem('Você não pode desativar seu próprio usuário.', 'error');
+                return;
+            }
+            
+            const usuario = usuarios.find(u => u.id === id);
+            if (!usuario) return;
+            
+            const confirmMessage = usuario.ativo ? 
+                `Tem certeza que deseja desativar o usuário "${usuario.nome}"?` :
+                `Tem certeza que deseja ativar o usuário "${usuario.nome}"?`;
+            
+            if (confirm(confirmMessage)) {
+                usuario.ativo = !usuario.ativo;
+                carregarUsuarios();
+                salvarDados();
+                mostrarMensagem(`Usuário ${usuario.ativo ? 'ativado' : 'desativado'} com sucesso!`, 'success');
+            }
+        }
+
+        // Funções para Backup
+        function exportarBackup() {
+            const dados = {
+                usuarios,
+                clientes,
+                produtos,
+                vendas,
+                historicoEstoque,
+                configuracoes,
+                metadata: {
+                    dataExportacao: new Date().toISOString(),
+                    totalRegistros: {
+                        usuarios: usuarios.length,
+                        clientes: clientes.length,
+                        produtos: produtos.length,
+                        vendas: vendas.length,
+                        historicoEstoque: historicoEstoque.length
+                    }
+                }
+            };
+            
+            const dadosJSON = JSON.stringify(dados, null, 2);
+            const blob = new Blob([dadosJSON], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_elisbella_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            document.getElementById('backup-modal').classList.remove('active');
+            mostrarMensagem('Backup exportado com sucesso!', 'success');
+        }
+        
+        function importarBackup() {
+            const fileInput = document.getElementById('backup-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                mostrarMensagem('Selecione um arquivo de backup.', 'error');
+                return;
+            }
+            
+            if (!confirm('Tem certeza que deseja importar dados de backup? Isso substituirá todos os dados atuais.')) {
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const dados = JSON.parse(e.target.result);
+                    
+                    // Validar estrutura do backup
+                    if (!dados.usuarios || !dados.configuracoes) {
+                        throw new Error('Arquivo de backup inválido.');
+                    }
+                    
+                    // Importar dados
+                    usuarios = dados.usuarios || [];
+                    clientes = dados.clientes || [];
+                    produtos = dados.produtos || [];
+                    vendas = dados.vendas || [];
+                    historicoEstoque = dados.historicoEstoque || [];
+                    configuracoes = dados.configuracoes || {
+                        nomeLoja: "ElisBella",
+                        inatividade: 1,
+                        backupWarning: "sim"
+                    };
+                    
+                    // Atualizar IDs
+                    proximoIdCliente = clientes.length > 0 ? Math.max(...clientes.map(c => c.id)) + 1 : 1;
+                    proximoIdProduto = produtos.length > 0 ? Math.max(...produtos.map(p => p.id)) + 1 : 1;
+                    proximoIdVenda = vendas.length > 0 ? Math.max(...vendas.map(v => v.id)) + 1 : 1;
+                    proximoIdHistorico = historicoEstoque.length > 0 ? Math.max(...historicoEstoque.map(h => h.id)) + 1 : 1;
+                    proximoIdUsuario = usuarios.length > 0 ? Math.max(...usuarios.map(u => u.id)) + 1 : 1;
+                    
+                    // Salvar dados
+                    salvarDados();
+                    
+                    // Aplicar configurações
+                    aplicarConfiguracoes();
+                    
+                    // Recarregar todas as seções
+                    carregarDashboard();
+                    carregarClientes();
+                    carregarProdutos();
+                    carregarEstoque();
+                    carregarVendas();
+                    carregarRelatorios();
+                    carregarConfiguracoes();
+                    
+                    document.getElementById('backup-modal').classList.remove('active');
+                    fileInput.value = '';
+                    mostrarMensagem('Backup importado com sucesso!', 'success');
+                } catch (error) {
+                    mostrarMensagem('Erro ao importar backup: ' + error.message, 'error');
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        function fazerBackupRapido() {
+            exportarBackup();
+            document.getElementById('backup-warning').classList.remove('active');
+        }
+        
+        function limparDados() {
+            if (!confirm('Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.')) {
+                return;
+            }
+            
+            if (!confirm('ATENÇÃO: Todos os dados serão permanentemente excluídos. Continuar?')) {
+                return;
+            }
+            
+            // Manter apenas o usuário atual
+            const usuarioAtual = usuarioLogado;
+            
+            // Limpar todos os dados
+            clientes = [];
+            produtos = [];
+            vendas = [];
+            historicoEstoque = [];
+            
+            // Manter apenas o usuário atual
+            usuarios = [usuarioAtual];
+            
+            // Resetar configurações padrão
+            configuracoes = {
+                nomeLoja: "ElisBella",
+                telefone: "",
+                email: "",
+                endereco: "",
+                cidade: "",
+                cnpj: "",
+                inatividade: 1,
+                backupWarning: "sim"
+            };
+            
+            // Resetar IDs
+            proximoIdCliente = 1;
+            proximoIdProduto = 1;
+            proximoIdVenda = 1;
+            proximoIdHistorico = 1;
+            proximoIdUsuario = 2;
+            
+            // Salvar dados
+            salvarDados();
+            
+            // Aplicar configurações
+            aplicarConfiguracoes();
+            
+            // Recarregar todas as seções
+            carregarDashboard();
+            carregarClientes();
+            carregarProdutos();
+            carregarEstoque();
+            carregarVendas();
+            carregarRelatorios();
+            
+            document.getElementById('backup-modal').classList.remove('active');
+            mostrarMensagem('Todos os dados foram limpos com sucesso!', 'success');
+        }
+
+        // Funções para Recibos
+        function gerarReciboPDF(venda) {
+            // Se uma venda for passada como parâmetro, use-a, caso contrário use a venda atual do formulário
+            let vendaParaRecibo;
+            
+            if (venda) {
+                vendaParaRecibo = venda;
+            } else if (itensVendaAtual.length > 0) {
+                // Criar uma venda temporária a partir dos itens atuais
+                const clienteId = document.getElementById('venda-cliente').value ? 
+                                  parseInt(document.getElementById('venda-cliente').value) : null;
+                const formaPagamento = document.getElementById('venda-forma-pagamento').value;
+                const observacoes = document.getElementById('venda-observacoes').value.trim();
+                const total = itensVendaAtual.reduce((sum, item) => sum + item.subtotal, 0);
+                
+                vendaParaRecibo = {
+                    id: 'PREVIEW',
+                    clienteId,
+                    data: new Date().toISOString(),
+                    produtos: itensVendaAtual.map(item => ({
+                        produtoId: item.produtoId,
+                        quantidade: item.quantidade,
+                        precoUnitario: item.precoUnitario
+                    })),
+                    formaPagamento,
+                    observacoes,
+                    total
+                };
+            } else {
+                mostrarMensagem('Nenhuma venda para gerar recibo.', 'error');
+                return;
+            }
+            
+            // Preparar dados do recibo
+            const cliente = vendaParaRecibo.clienteId ? clientes.find(c => c.id === vendaParaRecibo.clienteId) : null;
+            const nomeCliente = cliente ? cliente.nome : 'Cliente não identificado';
+            
+            // Atualizar conteúdo do recibo
+            document.getElementById('recibo-loja-nome').textContent = configuracoes.nomeLoja;
+            document.getElementById('recibo-loja-info').textContent = configuracoes.endereco ? `${configuracoes.endereco} - ${configuracoes.cidade}` : 'Moda Feminina';
+            document.getElementById('recibo-data').textContent = `Data: ${formatarData(vendaParaRecibo.data)}`;
+            document.getElementById('recibo-cliente').textContent = `Cliente: ${nomeCliente}`;
+            
+            // Limpar itens anteriores
+            const reciboItensCorpo = document.getElementById('recibo-itens-corpo');
+            reciboItensCorpo.innerHTML = '';
+            
+            // Adicionar itens da venda
+            vendaParaRecibo.produtos.forEach(item => {
+                const produto = produtos.find(p => p.id === item.produtoId);
+                const nomeProduto = produto ? produto.nome : 'Produto não encontrado';
+                const subtotal = item.quantidade * item.precoUnitario;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${nomeProduto}</td>
+                    <td style="text-align: right;">${item.quantidade}</td>
+                    <td style="text-align: right;">${formatarMoeda(item.precoUnitario)}</td>
+                `;
+                reciboItensCorpo.appendChild(row);
+            });
+            
+            // Atualizar total
+            document.getElementById('recibo-total').textContent = formatarMoeda(vendaParaRecibo.total);
+            document.getElementById('recibo-pagamento').textContent = `Pagamento: ${vendaParaRecibo.formaPagamento}`;
+            document.getElementById('recibo-observacoes').textContent = `Observações: ${vendaParaRecibo.observacoes || 'Nenhuma'}`;
+            
+            // Gerar PDF do recibo
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: [80, 297] // Tamanho de recibo térmico (80mm x 297mm)
+            });
+            
+            // Configurações
+            doc.setFont('Courier');
+            doc.setFontSize(10);
+            
+            let yPos = 10;
+            
+            // Cabeçalho
+            doc.text(configuracoes.nomeLoja, 40, yPos, { align: 'center' });
+            yPos += 5;
+            
+            if (configuracoes.endereco) {
+                doc.text(configuracoes.endereco, 40, yPos, { align: 'center' });
+                yPos += 4;
+            }
+            
+            if (configuracoes.cidade) {
+                doc.text(configuracoes.cidade, 40, yPos, { align: 'center' });
+                yPos += 4;
+            }
+            
+            doc.text(`Data: ${formatarData(vendaParaRecibo.data)}`, 40, yPos, { align: 'center' });
+            yPos += 8;
+            
+            // Linha separadora
+            doc.line(5, yPos, 75, yPos);
+            yPos += 5;
+            
+            // Cliente
+            doc.text(`Cliente: ${nomeCliente}`, 5, yPos);
+            yPos += 5;
+            
+            // Linha separadora
+            doc.line(5, yPos, 75, yPos);
+            yPos += 5;
+            
+            // Cabeçalho da tabela
+            doc.text('Item', 5, yPos);
+            doc.text('Qtd', 50, yPos);
+            doc.text('Valor', 65, yPos);
+            yPos += 4;
+            
+            // Linha separadora
+            doc.line(5, yPos, 75, yPos);
+            yPos += 5;
+            
+            // Itens da venda
+            vendaParaRecibo.produtos.forEach(item => {
+                const produto = produtos.find(p => p.id === item.produtoId);
+                const nomeProduto = produto ? produto.nome : 'Produto não encontrado';
+                const subtotal = item.quantidade * item.precoUnitario;
+                
+                // Quebrar nome do produto se for muito longo
+                const nomeLinhas = doc.splitTextToSize(nomeProduto, 40);
+                
+                nomeLinhas.forEach((linha, index) => {
+                    if (index === 0) {
+                        doc.text(linha, 5, yPos);
+                    } else {
+                        doc.text(linha, 10, yPos);
+                    }
+                    yPos += 4;
+                });
+                
+                doc.text(item.quantidade.toString(), 50, yPos - (nomeLinhas.length * 4) + 4);
+                doc.text(formatarMoeda(item.precoUnitario), 65, yPos - (nomeLinhas.length * 4) + 4);
+                
+                yPos += 2;
+            });
+            
+            // Linha separadora
+            doc.line(5, yPos, 75, yPos);
+            yPos += 5;
+            
+            // Total
+            doc.text('Total:', 40, yPos, { align: 'right' });
+            doc.text(formatarMoeda(vendaParaRecibo.total), 75, yPos, { align: 'right' });
+            yPos += 6;
+            
+            // Forma de pagamento
+            doc.text(`Forma de Pagamento: ${vendaParaRecibo.formaPagamento}`, 5, yPos);
+            yPos += 5;
+            
+            // Observações
+            if (vendaParaRecibo.observacoes) {
+                doc.text(`Observações: ${vendaParaRecibo.observacoes}`, 5, yPos);
+                yPos += 5;
+            }
+            
+            // Linha separadora
+            doc.line(5, yPos, 75, yPos);
+            yPos += 8;
+            
+            // Rodapé
+            doc.text('Obrigado pela preferência!', 40, yPos, { align: 'center' });
+            yPos += 5;
+            doc.text('Volte sempre!', 40, yPos, { align: 'center' });
+            
+            // Salvar o PDF
+            const nomeArquivo = `Recibo_${configuracoes.nomeLoja.replace(/\s+/g, '_')}_${vendaParaRecibo.id}_${new Date().toISOString().slice(0, 10)}.pdf`;
+            doc.save(nomeArquivo);
+            
+            if (!venda) {
+                mostrarMensagem('Recibo gerado com sucesso!', 'success');
+            }
         }
 
         // Funções auxiliares
@@ -2640,11 +4371,35 @@
             }, 5000);
         }
         
+        function mostrarMensagemLogin(texto, tipo) {
+            const mensagemDiv = document.getElementById('login-error');
+            mensagemDiv.textContent = texto;
+            mensagemDiv.className = 'message ' + tipo;
+            
+            // Esconder mensagem após 5 segundos
+            setTimeout(() => {
+                mensagemDiv.className = 'message';
+            }, 5000);
+        }
+        
+        function mostrarMensagemRegistro(texto, tipo) {
+            const mensagemDiv = document.getElementById('register-error');
+            mensagemDiv.textContent = texto;
+            mensagemDiv.className = 'message ' + tipo;
+            
+            // Esconder mensagem após 5 segundos
+            setTimeout(() => {
+                mensagemDiv.className = 'message';
+            }, 5000);
+        }
+        
         function salvarDados() {
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
             localStorage.setItem('clientes', JSON.stringify(clientes));
             localStorage.setItem('produtos', JSON.stringify(produtos));
             localStorage.setItem('vendas', JSON.stringify(vendas));
             localStorage.setItem('historicoEstoque', JSON.stringify(historicoEstoque));
+            localStorage.setItem('configuracoes', JSON.stringify(configuracoes));
         }
     </script>
 </body>
